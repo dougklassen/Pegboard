@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <Configurations>R2025;R2026</Configurations>
+    <Platforms>x64</Platforms>
+    <AddInName>Pegboard</AddInName>
+    <RootNamespace>DougKlassen.Pegboard</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+<!--Revit version targetting-->
+  <PropertyGroup Condition="$(Configuration.Contains('R2026'))">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RevitVersion>2026</RevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R2025'))">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RevitVersion>2025</RevitVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Revit_All_Main_Versions_API_x64">
+      <Version>$(RevitVersion).*</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)Resources\*.addin&quot; &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot;&#xD;&#xA;if not exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot; mkdir &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;&#xD;&#xA;if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)$(OutputPath)*.dll&quot; &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;" />
+  </Target>
+
+</Project>

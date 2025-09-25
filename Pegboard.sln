@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegboard", "Pegboard.csproj", "{DB9A535D-6D54-4D0A-AE8A-8E6EC5E837F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		R2025|x64 = R2025|x64
+		R2026|x64 = R2026|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB9A535D-6D54-4D0A-AE8A-8E6EC5E837F7}.R2025|x64.ActiveCfg = R2025|x64
+		{DB9A535D-6D54-4D0A-AE8A-8E6EC5E837F7}.R2025|x64.Build.0 = R2025|x64
+		{DB9A535D-6D54-4D0A-AE8A-8E6EC5E837F7}.R2026|x64.ActiveCfg = R2026|x64
+		{DB9A535D-6D54-4D0A-AE8A-8E6EC5E837F7}.R2026|x64.Build.0 = R2026|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB982E0F-A173-4C7D-A1DC-4EEEB49FF4FA}
+	EndGlobalSection
+EndGlobal
