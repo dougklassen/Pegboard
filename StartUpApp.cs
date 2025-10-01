@@ -1,0 +1,162 @@
+﻿using System.Windows.Media.Imaging;
+using System.Reflection;
+using System.IO;
+
+using Autodesk.Revit.UI;
+
+namespace DougKlassen.Pegboard
+{
+    public static class FileLocations
+    {
+        public static string AddInDirectory;
+        public static string AssemblyName;
+        public static string AssemblyPath;
+        public static readonly String ImperialTemplateDirectory = @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English-Imperial\";
+        public static readonly String ResourceNameSpace = "DougKlassen.Pegboard.Resources";
+        public static readonly String CommandNameSpace = "DougKlassen.Pegboard.Commands";
+    }
+
+    public class StartUpApp : IExternalApplication
+    {
+        BitmapImage largeIcon;
+        BitmapImage smallIcon;
+
+        /// <summary>
+        /// Run by Revit on start up. Loads the Pegboard tab of the ribbon.
+        /// </summary>
+        /// <param name="application">A reference to the Revit UI</param>
+        /// <returns>Whether the application sucessfully started up</returns>
+        public Result OnStartup(UIControlledApplication application)
+        {
+            FileLocations.AssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+            FileLocations.AddInDirectory = application.ControlledApplication.AllUsersAddinsLocation + @"\" + FileLocations.AssemblyName + @"\";
+            FileLocations.AssemblyPath = FileLocations.AddInDirectory + FileLocations.AssemblyName + ".dll";
+
+            TaskDialog.Show(
+                "File Locations",
+                "Assembly Name: " + FileLocations.AssemblyName +
+                "\nAddIn Directory: " + FileLocations.AddInDirectory +
+                "\nAssembly Path: " + FileLocations.AssemblyPath);
+
+            largeIcon = GetEmbeddedImageResource("iconLarge.png");
+            smallIcon = GetEmbeddedImageResource("iconSmall.png");
+
+            String tabName = "Pegboard";
+            try
+            {
+                application.CreateRibbonTab(tabName);
+            }
+            //an exception will be thrown if the tab already exists
+            catch (Autodesk.Revit.Exceptions.ArgumentException) { }
+            RibbonPanel pegboardRibonPanel = application.CreateRibbonPanel(tabName, "Pegboard Tools");
+
+            #region Create slide out panel: About
+            pegboardRibonPanel.AddSlideOut();
+            PushButtonData aboutCommandPushButtonData = new PushButtonData(
+                name: "AboutCommandButton",
+                text: "About",
+                assemblyName: FileLocations.AssemblyPath,
+                className: FileLocations.CommandNameSpace + '.' + "AboutCommand")
+            {
+                LargeImage = largeIcon,
+                Image = smallIcon,
+                AvailabilityClassName = FileLocations.CommandNameSpace + '.' + "AlwaysAvailableCommandAvailability"
+            };
+            pegboardRibonPanel.AddItem(aboutCommandPushButtonData);
+            #endregion
+
+            #region Create column one: Naming, Clean up, Export
+            #endregion
+
+            #region Create column two: Geometry, Elements, Schedules
+            #endregion
+
+            #region Create panel: Reset View Overrides
+            #endregion
+
+            #region Create panel: Apply Override Styles
+            #endregion
+
+            #region Create panel: Manage View Callouts
+            #endregion
+
+            return (Result.Succeeded);
+        }
+
+        /// <summary>
+        /// Run by Revit on shutdown.
+        /// </summary>
+        /// <param name="application">A reference to the Revit UI</param>
+        /// <returns>Whether the application successfully unloaded</returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            return(Result.Succeeded);
+        }
+
+        /// <summary>
+        /// Helper method to add a button to a pulldown
+        /// </summary>
+        /// <param name="pulldown">The pulldown button to which the command will be added</param>
+        /// <param name="buttonText">The text of the button</param>
+        /// <param name="buttonToolTip">The button tooltip</param>
+        /// <param name="commandClass">The command that will be executed</param>
+        /// <param name="commandAvailability">The command availability class for the command</param>
+        /// <param name="largeImage">The large icon image</param>
+        /// <param name="smallImage">The small icon image</param>
+        /// <returns>A reference to the added button</returns>
+        PushButton addButtonToPulldown(
+            PulldownButton pulldown,
+            string buttonText,
+            string buttonToolTip,
+            string commandClass,
+            string commandAvailability = null,
+            BitmapImage largeImage = null,
+            BitmapImage smallImage = null)
+        {
+            if (largeImage == null)
+            {
+                largeImage = largeIcon;
+            }
+            if (smallImage == null)
+            {
+                smallImage = smallIcon;
+            }
+
+            PushButtonData buttonData = new PushButtonData(
+                name: commandClass + "Button",
+                text: buttonText,
+                assemblyName: FileLocations.AssemblyPath,
+                className: FileLocations.CommandNameSpace + commandClass)
+            {
+                LargeImage = largeImage,
+                Image = smallImage
+            };
+            var button = pulldown.AddPushButton(buttonData);
+            button.ToolTip = buttonToolTip;
+
+            if (commandAvailability != null)
+            {
+                button.AvailabilityClassName = commandAvailability;
+            }
+
+            return button;
+        }
+
+        /// <summary>
+        /// Utility method to retrieve an embedded image resource from the assembly
+        /// </summary>
+        /// <param name="resourceName">The name of the image, corresponding to the filename of the image embedded in the assembly</param>
+        /// <returns>The loaded image represented as a BitmapImage</returns>
+        private BitmapImage GetEmbeddedImageResource(string resourceName)
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            Stream str = asm.GetManifestResourceStream(FileLocations.ResourceNameSpace + "." + resourceName);
+            BitmapImage bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.StreamSource = str;
+            bmp.EndInit();
+
+            return bmp;
+        }
+    }
+}

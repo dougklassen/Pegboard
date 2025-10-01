@@ -19,6 +19,14 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <RevitVersion>2025</RevitVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\iconLarge.png" />
+    <None Remove="Resources\iconSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\iconLarge.png" />
+    <EmbeddedResource Include="Resources\iconSmall.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Revit_All_Main_Versions_API_x64">
@@ -28,7 +36,7 @@
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)Resources\*.addin&quot; &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot;&#xD;&#xA;if not exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot; mkdir &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;&#xD;&#xA;if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)$(OutputPath)*.dll&quot; &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;" />
+    <Exec Command="if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)Resources\*.addin&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)&quot;&#xD;&#xA;if not exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot; mkdir &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;&#xD;&#xA;if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)$(OutputPath)*.dll&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;" />
   </Target>
 
 </Project>

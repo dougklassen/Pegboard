@@ -1,21 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <RevitAddIns>
-  <AddIn Type="Command">
-    <Assembly>".\Pegboard\Pegboard.dll"</Assembly>
-    <AddInId>2b81f0b0-5cbc-43f4-ac40-be70e37b461f</AddInId>
-    <FullClassName>DougKlassen.Pegboard.Commands.NewCommand</FullClassName>
-    <Text>New Command</Text>
-    <VendorId>Vendor</VendorId>
-    <VendorDescription>Doug Klassen</VendorDescription>
-  </AddIn>
-  <!--
   <AddIn Type="Application">
-    <Name>NewAddInPanel</Name>
-    <Assembly>.\NewAddIn\NewAddIn.dll</Assembly>
-    <AddInId>f78e5539-0065-4bbd-8cf1-be086c1b6d1a</AddInId>
-    <FullClassName>DougKlassen.Revit.NewAddIn.StartUp.StartUpApp</FullClassName>
-    <VendorId>Vendor</VendorId>
+    <Name>Pegboard</Name>
+    <Assembly>.\Pegboard\Pegboard.dll</Assembly>
+    <AddInId> 208cfa27-f491-44ce-a8b3-cbd8003ce166</AddInId>
+      <FullClassName>DougKlassen.Pegboard.StartUpApp</FullClassName>
+    <VendorId>TSRA</VendorId>
     <VendorDescription>Doug Klassen</VendorDescription>
   </AddIn>
-  -->
 </RevitAddIns>
