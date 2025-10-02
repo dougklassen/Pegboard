@@ -1,8 +1,7 @@
-﻿using System.Windows.Media.Imaging;
+﻿using Autodesk.Revit.UI;
+using System.Windows.Media.Imaging;
 using System.Reflection;
 using System.IO;
-
-using Autodesk.Revit.UI;
 
 namespace DougKlassen.Pegboard
 {
@@ -32,12 +31,6 @@ namespace DougKlassen.Pegboard
             FileLocations.AddInDirectory = application.ControlledApplication.AllUsersAddinsLocation + @"\" + FileLocations.AssemblyName + @"\";
             FileLocations.AssemblyPath = FileLocations.AddInDirectory + FileLocations.AssemblyName + ".dll";
 
-            TaskDialog.Show(
-                "File Locations",
-                "Assembly Name: " + FileLocations.AssemblyName +
-                "\nAddIn Directory: " + FileLocations.AddInDirectory +
-                "\nAssembly Path: " + FileLocations.AssemblyPath);
-
             largeIcon = GetEmbeddedImageResource("iconLarge.png");
             smallIcon = GetEmbeddedImageResource("iconSmall.png");
 
@@ -48,10 +41,46 @@ namespace DougKlassen.Pegboard
             }
             //an exception will be thrown if the tab already exists
             catch (Autodesk.Revit.Exceptions.ArgumentException) { }
-            RibbonPanel pegboardRibonPanel = application.CreateRibbonPanel(tabName, "Pegboard Tools");
+            RibbonPanel pegboardRibbonPanel = application.CreateRibbonPanel(tabName, "Pegboard Tools");
+
+            #region Create column one: Naming, Clean Up, Export
+            PulldownButtonData namingStandardsPulldownButtonData = new PulldownButtonData(
+                name: "AuditNamesToolsPulldown",
+                text: "Name Auditing");
+            PulldownButtonData cleanUpToolsPullDownButtonData = new PulldownButtonData(
+                name: "CleanUpToolsPulldown",
+                text: "Clean Up");
+            PulldownButtonData exportDataPullDownButttonData = new PulldownButtonData(
+                name: "ExportDataDownButton",
+                text: "Export/Import Data");
+            IList<RibbonItem> stackOne = pegboardRibbonPanel.AddStackedItems(
+                namingStandardsPulldownButtonData,
+                cleanUpToolsPullDownButtonData,
+                exportDataPullDownButttonData);
+
+            #region Column One-Naming Standards Pulldown
+            PulldownButton namingStandardsPulldownButton = (PulldownButton) stackOne[0];
+            #endregion
+
+            #region Column One-Clean Up Pulldown
+            PulldownButton cleanUpPulldownButton = (PulldownButton) stackOne[1];
+            addButtonToPulldown(
+                pulldown: cleanUpPulldownButton,
+                commandClass: "PurgeLinePatternsCommand",
+                buttonText: "Purge Line Patterns",
+                buttonToolTip: "Purge line patterns using regular expression matches");
+            #endregion
+
+            #region Column One-Export Pulldown
+            PulldownButton exportPulldownButton = (PulldownButton) stackOne[2];
+            #endregion
+            #endregion
+
+            #region Create column two: Geometry, Elements, Schedules
+            #endregion
 
             #region Create slide out panel: About
-            pegboardRibonPanel.AddSlideOut();
+            pegboardRibbonPanel.AddSlideOut();
             PushButtonData aboutCommandPushButtonData = new PushButtonData(
                 name: "AboutCommandButton",
                 text: "About",
@@ -62,13 +91,7 @@ namespace DougKlassen.Pegboard
                 Image = smallIcon,
                 AvailabilityClassName = FileLocations.CommandNameSpace + '.' + "AlwaysAvailableCommandAvailability"
             };
-            pegboardRibonPanel.AddItem(aboutCommandPushButtonData);
-            #endregion
-
-            #region Create column one: Naming, Clean up, Export
-            #endregion
-
-            #region Create column two: Geometry, Elements, Schedules
+            pegboardRibbonPanel.AddItem(aboutCommandPushButtonData);
             #endregion
 
             #region Create panel: Reset View Overrides
@@ -126,7 +149,7 @@ namespace DougKlassen.Pegboard
                 name: commandClass + "Button",
                 text: buttonText,
                 assemblyName: FileLocations.AssemblyPath,
-                className: FileLocations.CommandNameSpace + commandClass)
+                className: FileLocations.CommandNameSpace + '.' + commandClass)
             {
                 LargeImage = largeImage,
                 Image = smallImage

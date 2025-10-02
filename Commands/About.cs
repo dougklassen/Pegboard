@@ -1,7 +1,6 @@
-using System.Reflection;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Reflection;
 
 namespace DougKlassen.Pegboard.Commands
 {
