@@ -60,6 +60,21 @@ namespace DougKlassen.Pegboard
 
             #region Column One-Naming Standards Pulldown
             PulldownButton namingStandardsPulldownButton = (PulldownButton) stackOne[0];
+            addButtonToPulldown(
+                pulldown: namingStandardsPulldownButton,
+                commandClass: "AuditViewNamesCommand",
+                buttonText: "Audit View Names",
+                buttonToolTip: "Check view names against the view naming standard");
+            addButtonToPulldown(
+                pulldown: namingStandardsPulldownButton,
+                commandClass: "SetViewTitlesCommand",
+                buttonText: "Set empty view titles",
+                buttonToolTip: "Set the Title on Sheet parameter for views that don't have it set yet");
+            addButtonToPulldown(
+                pulldown: namingStandardsPulldownButton,
+                commandClass: "FixFamilyTypeNamesCommand",
+                buttonText: "Fix Family Type Names",
+                buttonToolTip: "Set family types in families with only one type to match the family name");
             #endregion
 
             #region Column One-Clean Up Pulldown
@@ -127,7 +142,7 @@ namespace DougKlassen.Pegboard
         /// <param name="largeImage">The large icon image</param>
         /// <param name="smallImage">The small icon image</param>
         /// <returns>A reference to the added button</returns>
-        PushButton addButtonToPulldown(
+        private PushButton addButtonToPulldown(
             PulldownButton pulldown,
             string buttonText,
             string buttonToolTip,

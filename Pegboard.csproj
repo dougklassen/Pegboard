@@ -8,6 +8,7 @@
     <RootNamespace>DougKlassen.Pegboard</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
 <!--Revit version targetting-->
