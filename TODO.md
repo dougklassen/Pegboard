@@ -6,7 +6,6 @@
 + Import and export survey points
 + Enumerate and manage in place families, including voids
 + Bake column top and base attachments
-+ Automatically create filters based on selected parameter
 + Select titleblocks based on sheet selection
 + Color working views red
 + Standardize to string, int, float
@@ -23,6 +22,12 @@
 + Sum up length of selected lines
 + Turn off analytical models for all elements
 + Additional flexibility in view renumbering, ability to save sheet & view naming & numbering standards per project.
++ Manage which family types project parameters are applied to
+    - Add a parameter to a persistent selection of family types, allowing aligning multiple parameters to the same collection of types.
+    - Adjust a parameter retroactively to target a specified collection of family types
+    - Function to create a set of categories/family types, with a realtime view of which parameters are available for filtering across all of them
++ Automatically create filters based on selected parameter
+    - Create a separate filter for each value of the parameter currently assigned in the model
 
 # Completed
 

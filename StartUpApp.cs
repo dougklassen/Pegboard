@@ -84,6 +84,16 @@ namespace DougKlassen.Pegboard
                 commandClass: "PurgeLinePatternsCommand",
                 buttonText: "Purge Line Patterns",
                 buttonToolTip: "Purge line patterns using regular expression matches");
+            addButtonToPulldown(
+                pulldown: cleanUpPulldownButton,
+                commandClass: "PurgeRefPlanesCommand",
+                buttonText: "Purge Reference Planes",
+                buttonToolTip: "Purge unlabelled reference planes");
+            addButtonToPulldown(
+                pulldown: cleanUpPulldownButton,
+                commandClass: "PurgeViewsCommand",
+                buttonText: "Purge Views",
+                buttonToolTip: "Purge unamed views");
             #endregion
 
             #region Column One-Export Pulldown
