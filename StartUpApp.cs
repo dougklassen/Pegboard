@@ -2,6 +2,7 @@
 using System.Windows.Media.Imaging;
 using System.Reflection;
 using System.IO;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DougKlassen.Pegboard
 {
@@ -58,7 +59,7 @@ namespace DougKlassen.Pegboard
                 cleanUpToolsPullDownButtonData,
                 exportDataPullDownButttonData);
 
-            #region Column One-Naming Standards Pulldown
+            #region Column One - Naming Standards Pulldown
             PulldownButton namingStandardsPulldownButton = (PulldownButton) stackOne[0];
             addButtonToPulldown(
                 pulldown: namingStandardsPulldownButton,
@@ -77,7 +78,7 @@ namespace DougKlassen.Pegboard
                 buttonToolTip: "Set family types in families with only one type to match the family name");
             #endregion
 
-            #region Column One-Clean Up Pulldown
+            #region Column One - Clean Up Pulldown
             PulldownButton cleanUpPulldownButton = (PulldownButton) stackOne[1];
             addButtonToPulldown(
                 pulldown: cleanUpPulldownButton,
@@ -96,12 +97,52 @@ namespace DougKlassen.Pegboard
                 buttonToolTip: "Purge unamed views");
             #endregion
 
-            #region Column One-Export Pulldown
+            #region Column One - Export Pulldown
             PulldownButton exportPulldownButton = (PulldownButton) stackOne[2];
             #endregion
             #endregion
 
             #region Create column two: Geometry, Elements, Schedules
+            PulldownButtonData geometryPulldownButtonData = new PulldownButtonData(
+                name: "GeometryPulldownButton",
+                text: "Fix Geometry");
+            PulldownButtonData elementsPulldownButtonData = new PulldownButtonData(
+                name: "ElementsPulldownButton",
+                text: "Element Properties");
+            PulldownButtonData schedulesPulldownButtonData = new PulldownButtonData(
+                name: "SchedulesPulldownButton",
+                text: "Schedules");
+            IList<RibbonItem> stackTwo = pegboardRibbonPanel.AddStackedItems(
+                geometryPulldownButtonData,
+                elementsPulldownButtonData,
+                schedulesPulldownButtonData);
+
+            #region Column Two - Geometry Pulldown
+            PulldownButton geometryPulldownButton = (PulldownButton) stackTwo[0];
+            addButtonToPulldown(
+               pulldown: geometryPulldownButton,
+               commandClass: "UnflipCommand",
+               buttonText: "Unflip Elements",
+               buttonToolTip: "Unflip elements that have been flipped on both axes",
+               commandAvailability: "UnflipCommandAvailability");
+            addButtonToPulldown(
+                pulldown: geometryPulldownButton,
+                commandClass: "DisallowWallJoinsCommand",
+                buttonText: "Disallow Wall Joins",
+                buttonToolTip: "Turn off wall joins for all selected walls",
+                commandAvailability: "DisallowWallJoinsCommandAvailability");
+            addButtonToPulldown(
+               pulldown: geometryPulldownButton,
+               commandClass: "SplitWallByLevelCommand",
+               buttonText: "Split Wall by Level",
+               buttonToolTip: "Split wall by intervening levels");
+            #endregion
+
+            #region Column Two - Elements Pulldown
+            #endregion
+
+            #region Column Two - Schedules Pulldown
+            #endregion
             #endregion
 
             #region Create slide out panel: About
@@ -184,7 +225,7 @@ namespace DougKlassen.Pegboard
 
             if (commandAvailability != null)
             {
-                button.AvailabilityClassName = commandAvailability;
+                button.AvailabilityClassName = FileLocations.CommandNameSpace + '.' + commandAvailability;
             }
 
             return button;
