@@ -139,6 +139,17 @@ namespace DougKlassen.Pegboard
             #endregion
 
             #region Column Two - Elements Pulldown
+            PulldownButton elementsPulldownButton = (PulldownButton)stackTwo[1];
+            addButtonToPulldown(
+                pulldown: elementsPulldownButton,
+                commandClass: "CommentAddCommand",
+                buttonText: "Add comment tag",
+                buttonToolTip: "Add space delimited tags to the comment parameter of selected elements");
+            addButtonToPulldown(
+                pulldown: elementsPulldownButton,
+                commandClass: "CommentRemoveCommand",
+                buttonText: "Remove comment tags",
+                buttonToolTip: "Remove space delimited tags from the comment parameter of selected elements");
             #endregion
 
             #region Column Two - Schedules Pulldown
