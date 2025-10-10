@@ -2,7 +2,6 @@
 using System.Windows.Media.Imaging;
 using System.Reflection;
 using System.IO;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DougKlassen.Pegboard
 {
@@ -153,6 +152,19 @@ namespace DougKlassen.Pegboard
             #endregion
 
             #region Column Two - Schedules Pulldown
+            PulldownButton schedulesPulldownButton = (PulldownButton)stackTwo[2];
+            addButtonToPulldown(
+                pulldown: schedulesPulldownButton,
+                commandClass: "StandardizeSchedulesCommand",
+                buttonText: "Standardize Schedule Formatting",
+                buttonToolTip: "Implement schedule formatting standards for export to Excel",
+                commandAvailability: "StandardizeSchedulesCommandAvailability");
+            addButtonToPulldown(
+                pulldown: schedulesPulldownButton,
+                commandClass: "CreateQuantityScheduleCommand",
+                buttonText: "Create a Quantity Schedule",
+                buttonToolTip: "Create a standardize quantity schedule using a configuration template",
+                commandAvailability: "NeverAvailableCommandAvailability");
             #endregion
             #endregion
 

@@ -13,4 +13,15 @@ namespace DougKlassen.Pegboard.Commands
             return true;
         }
     }
+
+    /// <summary>
+    /// Never make a command available. Primarily for placeholder commands that haven't been fully implemented yet.
+    /// </summary>
+    internal class NeverAvailableCommandAvailability : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
+        {
+            return false;
+        }
+    }
 }
