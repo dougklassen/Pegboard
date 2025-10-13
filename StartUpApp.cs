@@ -184,6 +184,17 @@ namespace DougKlassen.Pegboard
             #endregion
 
             #region Create panel: Reset View Overrides
+            RibbonPanel ResetRibbonPanel = application.CreateRibbonPanel(tabName, "Reset View Overrides");
+
+            PushButtonData resetHiddenCommandPushButtonData = new PushButtonData(
+                "resetHiddenCommandButton",
+                "Reset Hidden",
+                FileLocations.AddInDirectory + FileLocations.AssemblyName + ".dll",
+                FileLocations.CommandNameSpace + '.' + "ResetHiddenCommand");
+            resetHiddenCommandPushButtonData.LargeImage = largeIcon;
+            resetHiddenCommandPushButtonData.ToolTip = "Unhide all elements hidden in the current view";
+
+            ResetRibbonPanel.AddItem(resetHiddenCommandPushButtonData);
             #endregion
 
             #region Create panel: Apply Override Styles

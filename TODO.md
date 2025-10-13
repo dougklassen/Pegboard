@@ -28,6 +28,8 @@
     - Function to create a set of categories/family types, with a realtime view of which parameters are available for filtering across all of them
 + Automatically create filters based on selected parameter
     - Create a separate filter for each value of the parameter currently assigned in the model
++ Disjoin element by moving 0 distance with "Disjoin" selected
++ Set type mark per type name and vice versa
 
 # Completed
 
