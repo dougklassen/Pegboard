@@ -189,12 +189,21 @@ namespace DougKlassen.Pegboard
             PushButtonData resetHiddenCommandPushButtonData = new PushButtonData(
                 "resetHiddenCommandButton",
                 "Reset Hidden",
-                FileLocations.AddInDirectory + FileLocations.AssemblyName + ".dll",
-                FileLocations.CommandNameSpace + '.' + "ResetHiddenCommand");
+                FileLocations.AssemblyPath,
+                FileLocations.CommandNameSpace + ".ResetHiddenCommand");
             resetHiddenCommandPushButtonData.LargeImage = largeIcon;
             resetHiddenCommandPushButtonData.ToolTip = "Unhide all elements hidden in the current view";
 
+            PushButtonData resetGraphicsPushButtonData = new PushButtonData(
+                "resetGraphicsCommandButton",
+                "Reset Graphics",
+                FileLocations.AssemblyPath,
+                FileLocations.CommandNameSpace + ".ResetGraphicsCommand");
+            resetGraphicsPushButtonData.LargeImage = largeIcon;
+            resetGraphicsPushButtonData.ToolTip = "Reset all visibility graphics overrides in the current view";
+
             ResetRibbonPanel.AddItem(resetHiddenCommandPushButtonData);
+            ResetRibbonPanel.AddItem(resetGraphicsPushButtonData);
             #endregion
 
             #region Create panel: Apply Override Styles
