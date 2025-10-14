@@ -207,6 +207,27 @@ namespace DougKlassen.Pegboard
             #endregion
 
             #region Create panel: Apply Override Styles
+            RibbonPanel ApplyStylesPanel = application.CreateRibbonPanel(tabName, "Apply Override Styles");
+
+            PushButtonData pickUpStyleCommandPushButtonData = new PushButtonData(
+                "pickUpStyleCommandButton",
+                "Style Eyedropper",
+                FileLocations.AssemblyPath,
+                FileLocations.CommandNameSpace + ".PickUpStyleCommand");
+            pickUpStyleCommandPushButtonData.LargeImage = largeIcon;
+            pickUpStyleCommandPushButtonData.ToolTip = "Choose an override style to apply to other elements";
+            pickUpStyleCommandPushButtonData.AvailabilityClassName = FileLocations.CommandNameSpace + ".OverrideableViewCommandAvailability";
+            ApplyStylesPanel.AddItem(pickUpStyleCommandPushButtonData);
+
+            PushButtonData applyStyleCommandPushButtonData = new PushButtonData(
+                "applyStyleCommandButton",
+                "Apply Style",
+                FileLocations.AssemblyPath,
+                FileLocations.CommandNameSpace + ".ApplyStyleCommand");
+            applyStyleCommandPushButtonData.LargeImage = largeIcon;
+            applyStyleCommandPushButtonData.ToolTip = "Apply an override style to selected elements";
+            applyStyleCommandPushButtonData.AvailabilityClassName = FileLocations.CommandNameSpace + ".OverrideableViewCommandAvailability";
+            ApplyStylesPanel.AddItem(applyStyleCommandPushButtonData);
             #endregion
 
             #region Create panel: Manage View Callouts

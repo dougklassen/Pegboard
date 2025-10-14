@@ -30,6 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="NPOI" Version="2.7.5" />
     <PackageReference Include="Revit_All_Main_Versions_API_x64">
       <Version>$(RevitVersion).*</Version>

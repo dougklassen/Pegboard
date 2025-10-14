@@ -1,10 +1,7 @@
 ﻿using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using DougKlassen.Pegboard.Models;
+using NPOI.SS.UserModel;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DougKlassen.Pegboard.Helpers
 {
@@ -157,6 +154,33 @@ namespace DougKlassen.Pegboard.Helpers
             {
                 yield return y.ToString();
             }
+        }
+
+        /// <summary>
+        /// Get a VisibilityColor object that represents a Revit Color object
+        /// </summary>
+        /// <param name="color">A Revit Color</param>
+        /// <returns>A VisibilityColor representation of the Revit Color</returns>
+        public static VisibilityColor GetVisibilityModel(this Color color)
+        {
+            if (color.IsValid)
+            {
+                return new VisibilityColor(color);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get a VisibilityOverrides object that represents an OverrideGraphicSettings object
+        /// </summary>
+        /// <param name="settings">An OverrideGraphicSettings object</param>
+        /// <returns>A VisibilityOverrides representation of the OverrideGraphicsSettings object</returns>
+        public static VisibilityOverrides GetVisibilityModel(this OverrideGraphicSettings settings)
+        {
+            return new VisibilityOverrides(settings);
         }
     }
 }

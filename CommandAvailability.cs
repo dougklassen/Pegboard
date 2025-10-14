@@ -26,6 +26,41 @@ namespace DougKlassen.Pegboard.Commands
     }
 
     /// <summary>
+    /// Make command available if a view that allows graphic overrides is active
+    /// </summary>
+    public class OverrideableViewCommandAvailability : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
+        {
+            //check if a document is open
+            if (applicationData.ActiveUIDocument != null)
+            {
+                //check if there's an active view
+                if (applicationData.ActiveUIDocument.ActiveView != null)
+                {
+                    //check if graphic overrides are allowed
+                    if (applicationData.ActiveUIDocument.ActiveView.AreGraphicsOverridesAllowed())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
     /// Make command available if the current view is a sheet or the current selection contains at least one sheet
     /// </summary>
     internal class SheetCommandAvailability : IExternalCommandAvailability
