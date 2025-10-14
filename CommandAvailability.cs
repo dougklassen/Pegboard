@@ -24,4 +24,27 @@ namespace DougKlassen.Pegboard.Commands
             return false;
         }
     }
+
+    /// <summary>
+    /// Make command available if the current view is a sheet or the current selection contains at least one sheet
+    /// </summary>
+    internal class SheetCommandAvailability : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
+        {
+            UIDocument uiDoc = applicationData.ActiveUIDocument;
+            Document dbDoc = applicationData.ActiveUIDocument.Document;
+
+            if (
+                selectedCategories.Contains(Category.GetCategory(dbDoc, BuiltInCategory.OST_Sheets)) ||
+                uiDoc.ActiveView is ViewSheet)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

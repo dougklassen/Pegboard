@@ -210,6 +210,17 @@ namespace DougKlassen.Pegboard
             #endregion
 
             #region Create panel: Manage View Callouts
+            RibbonPanel manageCalloutsPanel = application.CreateRibbonPanel(tabName, "Manage View Callouts");
+
+            PushButtonData filterBugsCommandPushButtonData = new PushButtonData(
+                "filterCalloutsCommandButton",
+                "Filter View Callouts",
+                FileLocations.AssemblyPath,
+                FileLocations.CommandNameSpace + ".FilterCalloutsCommand");
+            filterBugsCommandPushButtonData.LargeImage = largeIcon;
+            filterBugsCommandPushButtonData.ToolTip = "Filter callouts for the current view";
+            filterBugsCommandPushButtonData.AvailabilityClassName = FileLocations.CommandNameSpace + ".SheetCommandAvailability";
+            manageCalloutsPanel.AddItem(filterBugsCommandPushButtonData);
             #endregion
 
             return (Result.Succeeded);
