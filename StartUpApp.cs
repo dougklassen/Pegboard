@@ -98,6 +98,16 @@ namespace DougKlassen.Pegboard
 
             #region Column One - Export Pulldown
             PulldownButton exportPulldownButton = (PulldownButton) stackOne[2];
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "ExportImportStylesCommand",
+                buttonText: "Export CAD Import Styles",
+                buttonToolTip: "Export CAD import styles");
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "LoadImportStylesCommand",
+                buttonText: "Load CAD Import Styles",
+                buttonToolTip: "Load CAD import styles");
             #endregion
             #endregion
 

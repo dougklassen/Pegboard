@@ -1,4 +1,6 @@
-﻿namespace DougKlassen.Pegboard.Models
+﻿using DougKlassen.Pegboard.Models;
+
+namespace DougKlassen.Pegboard.Repositories
 {
     internal interface IVisibilitySettingsRepo
     {

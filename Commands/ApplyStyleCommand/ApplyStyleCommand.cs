@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Pegboard.Models;
+using DougKlassen.Pegboard.Repositories;
 
 namespace DougKlassen.Pegboard.Commands
 {

@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using DougKlassen.Pegboard.Models;
+using Newtonsoft.Json;
 using System.IO;
 
-namespace DougKlassen.Pegboard.Models
+namespace DougKlassen.Pegboard.Repositories
 {
     internal class VisibilitySettingsJsonRepo : IVisibilitySettingsRepo
     {
-        private static String configFileName = "VizSettings.json";
-        private static String configFilePath = FileLocations.AddInDirectory + configFileName;
+        private static string configFileName = "VizSettings.json";
+        private static string configFilePath = FileLocations.AddInDirectory + configFileName;
 
         public VisibilitySettings LoadSettings()
         {
@@ -19,7 +20,7 @@ namespace DougKlassen.Pegboard.Models
 
             try
             {
-                String jsonText = File.ReadAllText(configFilePath);
+                string jsonText = File.ReadAllText(configFilePath);
                 settings = JsonConvert.DeserializeObject<VisibilitySettings>(jsonText);
             }
             catch (Exception e)
@@ -39,7 +40,7 @@ namespace DougKlassen.Pegboard.Models
 
             try
             {
-                String jsonText = JsonConvert.SerializeObject(settings);
+                string jsonText = JsonConvert.SerializeObject(settings);
                 File.WriteAllText(configFilePath, jsonText);
             }
             catch (Exception e)
