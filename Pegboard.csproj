@@ -11,6 +11,11 @@
     <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
+<!--Copy all dependency libraries to the output directory-->
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
 <!--Revit version targetting-->
   <PropertyGroup Condition="$(Configuration.Contains('R2026'))">
     <TargetFramework>net8.0-windows</TargetFramework>
