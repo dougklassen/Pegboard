@@ -108,6 +108,31 @@ namespace DougKlassen.Pegboard
                 commandClass: "LoadImportStylesCommand",
                 buttonText: "Load CAD Import Styles",
                 buttonToolTip: "Load CAD import styles");
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "ExportDetailTextCommand",
+                buttonText: "Export Callout Text for Review",
+                buttonToolTip: "Export callout text to a CSV file for review");
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "ExportParametersCommand",
+                buttonText: "Export Parameter Data",
+                buttonToolTip: "Export a catalog of parameters in the project in JSON format");
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "ExportSchedulesCommand",
+                buttonText: "Export Schedule Data",
+                buttonToolTip: "Export a catalog of schedules in the project in JSON format");
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "ExportCategoriesCommand",
+                buttonText: "Export Category Data",
+                buttonToolTip: "Export a catalog of categories in the project in JSON format");
+            addButtonToPulldown(
+                pulldown: exportPulldownButton,
+                commandClass: "ExportProjectDataCommand",
+                buttonText: "Export Project Data",
+                buttonToolTip: "Export a catalog of data about the current project");
             #endregion
             #endregion
 

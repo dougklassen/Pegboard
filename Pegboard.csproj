@@ -38,14 +38,6 @@
     </PackageReference>
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="Commands\ExportCategories\" />
-    <Folder Include="Commands\ExportDetailText\" />
-    <Folder Include="Commands\ExportParameters\" />
-    <Folder Include="Commands\ExportProjectData\" />
-    <Folder Include="Commands\ExportSchecules\" />
-  </ItemGroup>
-  
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)Resources\*.addin&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)&quot;&#xD;&#xA;if not exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot; mkdir &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;&#xD;&#xA;if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)$(OutputPath)*.dll&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;" />
   </Target>
