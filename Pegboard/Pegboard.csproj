@@ -44,7 +44,7 @@
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)Resources\*.addin&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)&quot;&#xD;&#xA;if not exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot; mkdir &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;&#xD;&#xA;if exist &quot;$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)&quot; copy &quot;$(SolutionDir)$(OutputPath)*.dll&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;" />
+    <Exec Command="if not exist &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot; mkdir &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Resources\*.addin&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)&quot;&#xD;&#xA;copy &quot;$(ProjectDir)$(OutputPath)*.dll&quot; &quot;$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AddInName)&quot;" />
   </Target>
 
 </Project>
