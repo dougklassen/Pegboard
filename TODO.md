@@ -30,6 +30,8 @@
     - Create a separate filter for each value of the parameter currently assigned in the model
 + Disjoin element by moving 0 distance with "Disjoin" selected
 + Set type mark per type name and vice versa
++ Copy and apply view settings without a template
++ Use Revit Schema repos instead of external JSON files
 
 # Completed
 

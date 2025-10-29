@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using WixSharp;
 using File = WixSharp.File;
 
@@ -10,12 +11,24 @@ namespace Installer
     {
         static void Main()
         {
-            //TODO: target the version of Revit matching the build
+            var assemblyConfigurationAttribute = typeof(Program).Assembly.GetCustomAttribute<AssemblyConfigurationAttribute>();
+            string buildConfigurationName = assemblyConfigurationAttribute.Configuration;
+            Console.WriteLine("Building installer for Pegboard " + buildConfigurationName);
+
             //the version of Revit for which to install the add in
-            string version = "2026";
-            //the GUID for the Pegboard addin for the specified Revit version
-            string versionGuid = "6a32a52c-a130-41d0-a522-8e0939c6bf56";
-            //the directory where addins will be installed for this version of Revit
+            string version;
+            //the GUID of the addin for the specified verison of Revit
+            string versionGuid;
+//target version based on version specific project configuration
+#if R2025
+            version = "2025";
+            versionGuid = "0663ee30-aa56-4020-8c7b-7d879526efdd";
+#elif R2026
+            version = "2026";
+            versionGuid = "6a32a52c-a130-41d0-a522-8e0939c6bf56";
+#else
+#endif
+
             string baseAddinDirPath = @"C:\ProgramData\Autodesk\Revit\Addins\" + version + @"\";
             //the location of the source files
             string pegboardSourceDirPath = @".\source\" + version + @"\";
@@ -43,8 +56,6 @@ namespace Installer
             var project = new Project( installName, baseAddinDir);
 
             project.GUID = new Guid(versionGuid);
-            //project.SourceBaseDir = pegboardSourceDirPath;
-            //project.OutDir = "<output dir path>";
 
             project.BuildMsi();
         }

@@ -3,7 +3,7 @@
   <AddIn Type="Application">
     <Name>Pegboard</Name>
     <Assembly>.\Pegboard\Pegboard.dll</Assembly>
-    <AddInId> 208cfa27-f491-44ce-a8b3-cbd8003ce166</AddInId>
+    <AddInId>208cfa27-f491-44ce-a8b3-cbd8003ce166</AddInId>
       <FullClassName>DougKlassen.Pegboard.StartUpApp</FullClassName>
     <VendorId>TSRA</VendorId>
     <VendorDescription>Doug Klassen</VendorDescription>
