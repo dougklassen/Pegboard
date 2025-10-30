@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using WixSharp;
+using WixSharp.Forms;
 using File = WixSharp.File;
 
 namespace Installer
@@ -53,9 +54,20 @@ namespace Installer
                 addInManifestFile,
                 new Dir("Pegboard", dllFiles.ToArray()));
 
-            var project = new Project( installName, baseAddinDir);
-
+            ManagedProject project = new ManagedProject(installName, baseAddinDir);
             project.GUID = new Guid(versionGuid);
+
+            project.ManagedUI = new ManagedUI();
+
+            project.ManagedUI.InstallDialogs
+                .Add(Dialogs.Welcome)
+                .Add(Dialogs.Progress)
+                .Add(Dialogs.Exit);
+
+            project.ManagedUI.ModifyDialogs
+                .Add(Dialogs.MaintenanceType)
+                .Add(Dialogs.Progress)
+                .Add(Dialogs.Exit);
 
             project.BuildMsi();
         }
