@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
     <UseWPF>true</UseWPF>
     <Configurations>R2025;R2026;R2024;R2027</Configurations>
     <Platforms>x64</Platforms>
@@ -29,7 +29,7 @@
 	</PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('R2025'))">
 		<RevitVersion>2025</RevitVersion>
-		<TargetFramework>net10.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('R2024'))">
