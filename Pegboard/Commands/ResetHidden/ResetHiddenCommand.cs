@@ -7,6 +7,7 @@ namespace DougKlassen.Pegboard.Commands
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     internal class ResetHiddenCommand : IExternalCommand
     {
+        //TODO: exclude links
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             String ttl = "Reset Hidden";

@@ -6,6 +6,7 @@ namespace DougKlassen.Pegboard.Commands
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     internal class FilterCalloutsCommand : IExternalCommand
     {
+        //TODO: filter callouts from outside of Sheet Collection
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIDocument uiDoc = commandData.Application.ActiveUIDocument;

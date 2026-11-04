@@ -16,25 +16,33 @@ namespace Installer
             string buildConfigurationName = assemblyConfigurationAttribute.Configuration;
             Console.WriteLine("Building installer for Pegboard " + buildConfigurationName);
 
-            //the version of Revit for which to install the add in
-            string version;
+            //TODO: pull this from the Pegboard assembly
+            //the revitVersion of Revit for which to install the add in
+            string revitVersion;
             //the GUID of the addin for the specified verison of Revit
             string versionGuid;
-//target version based on version specific project configuration
-#if R2025
-            version = "2025";
+            //target revitVersion based on revitVersion specific project configuration
+#if R2024
+            revitVersion = "2024";
+            versionGuid = "f0e7c1d5-3b8a-4f2e-9c6b-0f1e2d3c4b5a";
+#elif R2025
+            revitVersion = "2025";
             versionGuid = "0663ee30-aa56-4020-8c7b-7d879526efdd";
 #elif R2026
-            version = "2026";
+            revitVersion = "2026";
             versionGuid = "6a32a52c-a130-41d0-a522-8e0939c6bf56";
+#elif R2027
+            revitVersion = "2027";
+            versionGuid = "b289bbca-0224-4517-8d7d-9d3692a12d01";
 #else
 #endif
+            string addinVersion = "1.0.3";
 
-            string baseAddinDirPath = @"C:\ProgramData\Autodesk\Revit\Addins\" + version + @"\";
+            string baseAddinDirPath = @"C:\ProgramData\Autodesk\Revit\Addins\" + revitVersion + @"\";
             //the location of the source files
-            string pegboardSourceDirPath = @".\source\" + version + @"\";
+            string pegboardSourceDirPath = @".\source\" + revitVersion + @"\";
             //the name of the installation
-            string installName = "Pegboard " + version;
+            string installName = "Pegboard " + revitVersion;
 
             var files = Directory.GetFiles(pegboardSourceDirPath);
             List<File> dllFiles = new List<File>();
@@ -56,9 +64,10 @@ namespace Installer
 
             ManagedProject project = new ManagedProject(installName, baseAddinDir);
             project.GUID = new Guid(versionGuid);
+            project.Version = new Version(addinVersion);
+            project.OutFileName = "Pegboard " + revitVersion + " " + addinVersion;
 
             project.ManagedUI = new ManagedUI();
-
             project.ManagedUI.InstallDialogs
                 .Add(Dialogs.Welcome)
                 .Add(Dialogs.Progress)

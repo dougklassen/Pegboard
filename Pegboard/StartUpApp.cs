@@ -19,6 +19,11 @@ namespace DougKlassen.Pegboard
     {
         BitmapImage largeIcon;
         BitmapImage smallIcon;
+        BitmapImage calloutIcon;
+        BitmapImage eyedropperIcon;
+        BitmapImage paintbrushIcon;
+        BitmapImage resetHiddenIcon;
+        BitmapImage resetIcon;
 
         /// <summary>
         /// Run by Revit on start up. Loads the Pegboard tab of the ribbon.
@@ -33,6 +38,11 @@ namespace DougKlassen.Pegboard
 
             largeIcon = GetEmbeddedImageResource("iconLarge.png");
             smallIcon = GetEmbeddedImageResource("iconSmall.png");
+            calloutIcon = GetEmbeddedImageResource("calloutLarge.png");
+            eyedropperIcon = GetEmbeddedImageResource("eyedropperLarge.png");
+            paintbrushIcon = GetEmbeddedImageResource("paintbrushLarge.png");
+            resetHiddenIcon = GetEmbeddedImageResource("resetHiddenLarge.png");
+            resetIcon = GetEmbeddedImageResource("resetLarge.png");
 
             String tabName = "Pegboard";
             try
@@ -226,7 +236,7 @@ namespace DougKlassen.Pegboard
                 "Reset Hidden",
                 FileLocations.AssemblyPath,
                 FileLocations.CommandNameSpace + ".ResetHiddenCommand");
-            resetHiddenCommandPushButtonData.LargeImage = largeIcon;
+            resetHiddenCommandPushButtonData.LargeImage = resetHiddenIcon;
             resetHiddenCommandPushButtonData.ToolTip = "Unhide all elements hidden in the current view";
 
             PushButtonData resetGraphicsPushButtonData = new PushButtonData(
@@ -234,7 +244,7 @@ namespace DougKlassen.Pegboard
                 "Reset Graphics",
                 FileLocations.AssemblyPath,
                 FileLocations.CommandNameSpace + ".ResetGraphicsCommand");
-            resetGraphicsPushButtonData.LargeImage = largeIcon;
+            resetGraphicsPushButtonData.LargeImage = resetIcon;
             resetGraphicsPushButtonData.ToolTip = "Reset all visibility graphics overrides in the current view";
 
             ResetRibbonPanel.AddItem(resetHiddenCommandPushButtonData);
@@ -249,7 +259,7 @@ namespace DougKlassen.Pegboard
                 "Style Eyedropper",
                 FileLocations.AssemblyPath,
                 FileLocations.CommandNameSpace + ".PickUpStyleCommand");
-            pickUpStyleCommandPushButtonData.LargeImage = largeIcon;
+            pickUpStyleCommandPushButtonData.LargeImage = eyedropperIcon;
             pickUpStyleCommandPushButtonData.ToolTip = "Choose an override style to apply to other elements";
             pickUpStyleCommandPushButtonData.AvailabilityClassName = FileLocations.CommandNameSpace + ".OverrideableViewCommandAvailability";
             ApplyStylesPanel.AddItem(pickUpStyleCommandPushButtonData);
@@ -259,7 +269,7 @@ namespace DougKlassen.Pegboard
                 "Apply Style",
                 FileLocations.AssemblyPath,
                 FileLocations.CommandNameSpace + ".ApplyStyleCommand");
-            applyStyleCommandPushButtonData.LargeImage = largeIcon;
+            applyStyleCommandPushButtonData.LargeImage = paintbrushIcon;
             applyStyleCommandPushButtonData.ToolTip = "Apply an override style to selected elements";
             applyStyleCommandPushButtonData.AvailabilityClassName = FileLocations.CommandNameSpace + ".OverrideableViewCommandAvailability";
             ApplyStylesPanel.AddItem(applyStyleCommandPushButtonData);
@@ -273,7 +283,7 @@ namespace DougKlassen.Pegboard
                 "Filter View Callouts",
                 FileLocations.AssemblyPath,
                 FileLocations.CommandNameSpace + ".FilterCalloutsCommand");
-            filterBugsCommandPushButtonData.LargeImage = largeIcon;
+            filterBugsCommandPushButtonData.LargeImage = calloutIcon;
             filterBugsCommandPushButtonData.ToolTip = "Filter callouts for the current view";
             filterBugsCommandPushButtonData.AvailabilityClassName = FileLocations.CommandNameSpace + ".SheetCommandAvailability";
             manageCalloutsPanel.AddItem(filterBugsCommandPushButtonData);
@@ -348,14 +358,14 @@ namespace DougKlassen.Pegboard
         /// <returns>The loaded image represented as a BitmapImage</returns>
         private BitmapImage GetEmbeddedImageResource(string resourceName)
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            Stream str = asm.GetManifestResourceStream(FileLocations.ResourceNameSpace + "." + resourceName);
-            BitmapImage bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.StreamSource = str;
-            bmp.EndInit();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream(FileLocations.ResourceNameSpace + "." + resourceName);
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = stream;
+            bitmap.EndInit();
 
-            return bmp;
+            return bitmap;
         }
     }
 }

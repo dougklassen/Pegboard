@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
     <UseWPF>true</UseWPF>
-    <Configurations>R2025;R2026</Configurations>
+    <Configurations>R2025;R2026;R2024;R2027</Configurations>
     <Platforms>x64</Platforms>
     <AddInName>Pegboard</AddInName>
     <RootNamespace>DougKlassen.Pegboard</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
@@ -17,34 +17,70 @@
   </PropertyGroup>
 
 <!--Revit version targetting-->
-  <PropertyGroup Condition="$(Configuration.Contains('R2026'))">
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <RevitVersion>2026</RevitVersion>
+  <PropertyGroup Condition="$(Configuration.Contains('R2027'))">
+		<RevitVersion>2027</RevitVersion>
+		<TargetFramework>net10.0-windows</TargetFramework>
+  	<Nullable>enable</Nullable>
   </PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2026'))">
+		<RevitVersion>2026</RevitVersion>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('R2025'))">
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <RevitVersion>2025</RevitVersion>
-  </PropertyGroup>
+		<RevitVersion>2025</RevitVersion>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R2024'))">
+		<RevitVersion>2024</RevitVersion>
+		<TargetFramework>net481</TargetFramework>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+	
   <ItemGroup>
+    <None Remove="Resources\calloutLarge.png" />
+    <None Remove="Resources\eyedropperLarge.png" />
     <None Remove="Resources\iconLarge.png" />
     <None Remove="Resources\iconSmall.png" />
+    <None Remove="Resources\paintbrushLarge.png" />
+    <None Remove="Resources\resetHiddenLarge.pdn" />
+    <None Remove="Resources\resetHiddenLarge.png" />
+    <None Remove="Resources\resetLarge.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\calloutLarge.png" />
+    <EmbeddedResource Include="Resources\eyedropperLarge.png" />
     <EmbeddedResource Include="Resources\iconLarge.png" />
     <EmbeddedResource Include="Resources\iconSmall.png" />
+    <EmbeddedResource Include="Resources\paintbrushLarge.png" />
+    <EmbeddedResource Include="Resources\resetHiddenLarge.png" />
+    <EmbeddedResource Include="Resources\resetLarge.png" />
   </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="NPOI" Version="2.7.5" />
-    <PackageReference Include="Revit_All_Main_Versions_API_x64">
-      <Version>$(RevitVersion).*</Version>
+    <PackageReference Include="NPOI" Version="2.8.1" />
+    <PackageReference Condition="$(Configuration.Contains('R2027'))" Include="Revit_All_Main_Versions_API_x64">
+      <Version>2027.2.0</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Condition="$(Configuration.Contains('R2026'))" Include="Revit_All_Main_Versions_API_x64">
+      <Version>2026.5.0</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Condition="$(Configuration.Contains('R2025'))" Include="Revit_All_Main_Versions_API_x64">
+      <Version>2025.0.0</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Condition="$(Configuration.Contains('R2024'))" Include="Revit_All_Main_Versions_API_x64">
+      <Version>2024.2.0</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(ProjectDir)Resources\*.addin&quot; &quot;$(SolutionDir)\Installer\source\$(RevitVersion)&quot;&#xD;&#xA;copy &quot;$(ProjectDir)$(OutputPath)*.dll&quot; &quot;$(SolutionDir)\Installer\source\$(RevitVersion)&quot;" />
+    <Exec Command="copy &quot;$(ProjectDir)Resources\*.addin&quot; &quot;$(SolutionDir)\Installer\source\$(RevitVersion)\&quot;&#xD;&#xA;copy &quot;$(ProjectDir)$(OutputPath)*.dll&quot; &quot;$(SolutionDir)\Installer\source\$(RevitVersion)\&quot;" />
   </Target>
 
 </Project>
