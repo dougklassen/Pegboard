@@ -1,10 +1,11 @@
 ﻿using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace DougKlassen.Pegboard.Models
 {
     internal class ScheduleModel
     {
-        public String name;
+        public string name;
         public long id;
         public List<long> parameters;
 

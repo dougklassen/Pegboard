@@ -1,19 +1,20 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
+using System;
 using System.Collections;
 
 namespace DougKlassen.Pegboard.Commands
 {
     internal class CreateQuantityScheduleCommand : IExternalCommand
     {
-        private String filterParamColumnName = "tphase";
-        private String labelColumnName = "Description";
-        private String unitsColumnName = "Units";
-        private String elementCategoryColumnName = "Category";
-        private String projectParamColumnName = "Project Parameter";
-        private String builtInParamColumnName = "BuiltIn Parameter";
-        private String calculationColumnName = "Calculated Field";
+        private string filterParamColumnName = "tphase";
+        private string labelColumnName = "Description";
+        private string unitsColumnName = "Units";
+        private string elementCategoryColumnName = "Category";
+        private string projectParamColumnName = "Project Parameter";
+        private string builtInParamColumnName = "BuiltIn Parameter";
+        private string calculationColumnName = "Calculated Field";
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

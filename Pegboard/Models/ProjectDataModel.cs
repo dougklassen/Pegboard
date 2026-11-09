@@ -4,12 +4,12 @@ namespace DougKlassen.Pegboard.Models
 {
     internal class ProjectDataModel
     {
-        public String Name { get; set; }
-        public String Address { get; set; }
-        public String ProjectNumber { get; set; }
-        public String Status { get; set; }
-        public String ClientName { get; set; }
-        public String FilePath { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string ProjectNumber { get; set; }
+        public string Status { get; set; }
+        public string ClientName { get; set; }
+        public string FilePath { get; set; }
         public int? FileSize { get; set; }
         public int? ElementCount { get; set; }
 

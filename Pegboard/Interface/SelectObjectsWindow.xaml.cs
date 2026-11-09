@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -15,7 +17,7 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// </summary>
         /// <param name="obj">The object to be encapsulated</param>
         /// <param name="objectSelected">Whether the object has been selected</param>
-        public ObjectSelection(Object obj, Boolean objectSelected)
+        public ObjectSelection(object obj, bool objectSelected)
         {
             Value = obj;
             IsSelected = objectSelected;
@@ -24,17 +26,17 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// <summary>
         /// Whether the object is selected, to be bound to the IsChecked property of the Checkbox
         /// </summary>
-        public Boolean IsSelected { get; set; }
+        public bool IsSelected { get; set; }
 
         /// <summary>
         /// The object encapsulated in the ObjectSelection
         /// </summary>
-        public Object Value { get; set; }
+        public object Value { get; set; }
 
         /// <summary>
         /// An encapsulation of Object.ToString() for use in binding as the text of the Checkbox
         /// </summary>
-        public String Description
+        public string Description
         {
             get
             {
@@ -63,7 +65,7 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// </summary>
         /// <param name="objects">The collection of objects</param>
         /// <param name="selectAll">Whether all objects are checked by default</param>
-        public SelectObjectsWindow(List<Object> objects, Boolean selectAll)
+        public SelectObjectsWindow(List<object> objects, bool selectAll)
             : this(objects, selectAll, null, null)
         {
         }
@@ -75,13 +77,13 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// <param name="selectAll"></param>
         /// <param name="title"></param>
         public SelectObjectsWindow(
-            IEnumerable<Object> objects,
-            Boolean selectAll,
-            String title,
-            String message)
+            IEnumerable<object> objects,
+            bool selectAll,
+            string title,
+            string message)
         {
             ObjectList = new List<ObjectSelection>();
-            foreach (Object obj in objects)
+            foreach (object obj in objects)
             {
                 ObjectList.Add(new ObjectSelection(obj, selectAll));
             }
@@ -92,7 +94,7 @@ namespace DougKlassen.Revit.Perfect.Interface
                 Title = title;
             }
 
-            if (String.IsNullOrWhiteSpace(message))
+            if (string.IsNullOrWhiteSpace(message))
             {
                 instructionsTextBlock.Visibility = Visibility.Collapsed;
             }
@@ -116,11 +118,11 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// <summary>
         /// All the tags that are currently selected in the window by the user by checking their CheckBox
         /// </summary>
-        public List<Object> SelectedObjects
+        public List<object> SelectedObjects
         {
             get
             {
-                List<Object> selectedObjects = new List<Object>();
+                List<object> selectedObjects = new List<object>();
                 foreach (ObjectSelection obj in ObjectList)
                 {
                     if (obj.IsSelected)
@@ -135,7 +137,7 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// <summary>
         /// The instructional message displayed at the top of the dialog
         /// </summary>
-        public String Instructions
+        public string Instructions
         {
             get;
             set;
@@ -164,7 +166,7 @@ namespace DougKlassen.Revit.Perfect.Interface
 
         private void noneButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Object item in tagListBox.Items)
+            foreach (object item in tagListBox.Items)
             {
                 CheckBox checkBox = GetCheckboxControl(item);
                 checkBox.IsChecked = false;
@@ -176,7 +178,7 @@ namespace DougKlassen.Revit.Perfect.Interface
         /// </summary>
         /// <param name="sourceObject">A list Item contraining a CheckBox created by a DataTemplate</param>
         /// <returns>The CheckBox control</returns>
-        private CheckBox GetCheckboxControl(Object sourceObject)
+        private CheckBox GetCheckboxControl(object sourceObject)
         {
             CheckBox checkBox;
             DependencyObject listItem = tagListBox.ItemContainerGenerator.ContainerFromItem(sourceObject);

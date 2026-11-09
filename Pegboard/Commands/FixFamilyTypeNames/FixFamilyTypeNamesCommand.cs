@@ -1,5 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DougKlassen.Pegboard.Commands
@@ -9,7 +12,7 @@ namespace DougKlassen.Pegboard.Commands
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            StringBuilder resultText = new StringBuilder(String.Format("Family Type Naming - {0} {1}\n", DateTime.Now.ToLongTimeString(), DateTime.Now.ToShortDateString()));
+            StringBuilder resultText = new StringBuilder(string.Format("Family Type Naming - {0} {1}\n", DateTime.Now.ToLongTimeString(), DateTime.Now.ToShortDateString()));
             Document dbDoc = commandData.Application.ActiveUIDocument.Document;
 
             IEnumerable<Family> familiesToProcess = new FilteredElementCollector(dbDoc).OfClass(typeof(Family)).ToElements().Cast<Family>();

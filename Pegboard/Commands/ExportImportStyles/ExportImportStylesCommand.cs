@@ -4,6 +4,9 @@ using DougKlassen.Pegboard.Helpers;
 using DougKlassen.Pegboard.Models;
 using DougKlassen.Pegboard.Repositories;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DougKlassen.Pegboard.Commands
@@ -44,7 +47,7 @@ namespace DougKlassen.Pegboard.Commands
                 }
             }
 
-            if (String.Empty != msg)
+            if (string.Empty != msg)
             {
                 TaskDialog.Show("Import Categories", msg);
             }
@@ -56,7 +59,7 @@ namespace DougKlassen.Pegboard.Commands
                 DefaultExt = ".json",
                 Filter = "JSON files|*.json|Text Files|*.txt|All Files|*.*"
             };
-            Boolean? dlgResult = dlg.ShowDialog();
+            bool? dlgResult = dlg.ShowDialog();
 
             if (true != dlgResult.Value)
             {

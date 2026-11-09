@@ -1,5 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -26,7 +28,7 @@ namespace DougKlassen.Pegboard.Commands
                     Parameter p = v.LookupParameter("Title on Sheet");
                     if (null != p
                             && !p.IsReadOnly
-                            && String.IsNullOrWhiteSpace(p.AsString()))
+                            && string.IsNullOrWhiteSpace(p.AsString()))
                     {
                         Parameter n = v.LookupParameter("View Name");
                         p.Set(n.AsString());

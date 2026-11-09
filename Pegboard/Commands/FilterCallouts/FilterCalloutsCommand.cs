@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -36,7 +37,7 @@ namespace DougKlassen.Pegboard.Commands
                 }
                 else
                 {
-                    String msg = "You must select at least one sheet";
+                    string msg = "You must select at least one sheet";
                     TaskDialog.Show("Select a sheet", msg);
 
                     return Result.Failed;
@@ -46,12 +47,12 @@ namespace DougKlassen.Pegboard.Commands
             //Show window
             //TODO: persist number of characters to match
             FilterCalloutsWindow window = new FilterCalloutsWindow(sheets);
-            Boolean result = (Boolean)window.ShowDialog();
+            bool result = (bool)window.ShowDialog();
             if (!result)
             {
                 return Result.Cancelled;
             }
-            Int32 charsToMatch = window.CharsToMatch;
+            int charsToMatch = window.CharsToMatch;
 
             //process each selected sheet
             foreach (ViewSheet sheet in sheets)
@@ -60,7 +61,7 @@ namespace DougKlassen.Pegboard.Commands
                 {
                     t.Start("Set callout visibilty for " + sheet.SheetNumber);
                     //find the sheet number substring to be matched
-                    String filterString = String.Empty;
+                    string filterString = string.Empty;
                     if (sheet.SheetNumber.Length >= charsToMatch)
                     {
                         filterString = sheet.SheetNumber.Substring(0, charsToMatch);
@@ -76,7 +77,7 @@ namespace DougKlassen.Pegboard.Commands
                     {
                         View view = dbDoc.GetElement(viewId) as View;
                         //temporarily enter reveal hidden mode so that hidden callouts are included
-                        Boolean alreadyInRevealHidden = view.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements);
+                        bool alreadyInRevealHidden = view.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements);
                         if (!alreadyInRevealHidden)
                         {
                             view.EnableRevealHiddenMode();
@@ -124,7 +125,7 @@ namespace DougKlassen.Pegboard.Commands
                         var markers = new FilteredElementCollector(dbDoc, viewId).OfCategory(BuiltInCategory.OST_Elev);
                         foreach (ElevationMarker marker in markers)
                         {
-                            Boolean hasVisiblePointer = false;
+                            bool hasVisiblePointer = false;
                             for (int i = 0; i < marker.MaximumViewCount; i++)
                             {
                                 ElementId indexedViewId = marker.GetViewId(i);

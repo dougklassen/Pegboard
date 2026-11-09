@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using DougKlassen.Pegboard.Models;
 using DougKlassen.Pegboard.Repositories;
+using System.Collections.Generic;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -10,7 +11,7 @@ namespace DougKlassen.Pegboard.Commands
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            String ttl = "Apply Style";
+            string ttl = "Apply Style";
             IVisibilitySettingsRepo repo = new VisibilitySettingsJsonRepo();
             VisibilitySettings VisibilitySettings = repo.LoadSettings();
 

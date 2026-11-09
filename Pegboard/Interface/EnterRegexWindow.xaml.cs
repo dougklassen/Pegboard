@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,15 +16,15 @@ namespace DougKlassen.Revit.Perfect.Interface
             set;
         }
 
-        public String RegexValue
+        public string RegexValue
         {
             get
             {
-                return (String)GetValue(RegexValueProperty);
+                return (string)GetValue(RegexValueProperty);
             }
             set
             {
-                String oldValue = RegexValue;
+                string oldValue = RegexValue;
                 SetValue(RegexValueProperty, value);
                 OnPropertyChanged(
                     new DependencyPropertyChangedEventArgs(RegexValueProperty, oldValue, value));
@@ -31,7 +32,7 @@ namespace DougKlassen.Revit.Perfect.Interface
         }
         public static readonly DependencyProperty RegexValueProperty = DependencyProperty.Register(
             "RegexValue",
-            typeof(String),
+            typeof(string),
             typeof(Window),
             new UIPropertyMetadata(null));
 
@@ -45,7 +46,7 @@ namespace DougKlassen.Revit.Perfect.Interface
             //Check if the value is a valid regular expression
             try
             {
-                Regex.Match(String.Empty, regexTextBox.Text);
+                Regex.Match(string.Empty, regexTextBox.Text);
                 okButton.IsEnabled = true;
                 statusLabel.Content = "Valid regular expression";
             }

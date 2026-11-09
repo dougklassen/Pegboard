@@ -1,14 +1,16 @@
 ﻿using DougKlassen.Pegboard.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DougKlassen.Pegboard.Repositories
 {
     internal class CategoryCatalogJsonRepo : ICategoryCatalogRepo
     {
-        private String filePath;
+        private string filePath;
 
-        public CategoryCatalogJsonRepo(String jsonRepoFilePath)
+        public CategoryCatalogJsonRepo(string jsonRepoFilePath)
         {
             filePath = jsonRepoFilePath;
         }
@@ -25,7 +27,7 @@ namespace DougKlassen.Pegboard.Repositories
                 Formatting = Formatting.Indented
             };
 
-            String jsonData = JsonConvert.SerializeObject(catalog, settings);
+            string jsonData = JsonConvert.SerializeObject(catalog, settings);
             try
             {
                 File.WriteAllText(filePath, jsonData);

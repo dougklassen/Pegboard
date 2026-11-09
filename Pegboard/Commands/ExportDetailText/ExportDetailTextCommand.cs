@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace DougKlassen.Pegboard.Commands
@@ -29,7 +30,7 @@ namespace DougKlassen.Pegboard.Commands
             }
 
             //retrieve and log all text notes on views on all selected sheets
-            Int32 textNoteCount = 0;
+            int textNoteCount = 0;
             FilteredElementCollector textCollector;
             ElementId textNotesCategoryId = new ElementId(BuiltInCategory.OST_TextNotes);
             StringBuilder output = new StringBuilder();
@@ -48,7 +49,7 @@ namespace DougKlassen.Pegboard.Commands
                     {
                         var text = textNote.Text;
                         //Revit TextNote.Text is terminated by a CR which needs to be stripped
-                        Char[] charsToTrim = { '\x000A', '\x000D', '\x0009', '\x0020' }; //LF, CR, tab, space
+                        char[] charsToTrim = { '\x000A', '\x000D', '\x0009', '\x0020' }; //LF, CR, tab, space
                         text = text.Trim(charsToTrim);
                         //TODO: skip common text such as "TYP" or "SIM"
                         output.AppendFormat("{0}\t{1}\t{2}\r\n",
@@ -61,7 +62,7 @@ namespace DougKlassen.Pegboard.Commands
             }
 
             //prompt the user for an output location
-            String outputFilePath;
+            string outputFilePath;
             var saveDialog = new SaveFileDialog();
             saveDialog.FileName = "Exported callout text.txt";
             saveDialog.DefaultExt = ".txt";

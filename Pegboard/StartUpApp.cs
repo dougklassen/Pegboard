@@ -1,7 +1,8 @@
 ﻿using Autodesk.Revit.UI;
-using System.Windows.Media.Imaging;
-using System.Reflection;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Windows.Media.Imaging;
 
 namespace DougKlassen.Pegboard
 {
@@ -10,9 +11,9 @@ namespace DougKlassen.Pegboard
         public static string AddInDirectory;
         public static string AssemblyName;
         public static string AssemblyPath;
-        public static readonly String ImperialTemplateDirectory = @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English-Imperial\";
-        public static readonly String ResourceNameSpace = "DougKlassen.Pegboard.Resources";
-        public static readonly String CommandNameSpace = "DougKlassen.Pegboard.Commands";
+        public static readonly string ImperialTemplateDirectory = @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English-Imperial\";
+        public static readonly string ResourceNameSpace = "DougKlassen.Pegboard.Resources";
+        public static readonly string CommandNameSpace = "DougKlassen.Pegboard.Commands";
     }
 
     public class StartUpApp : IExternalApplication
@@ -44,7 +45,7 @@ namespace DougKlassen.Pegboard
             resetHiddenIcon = GetEmbeddedImageResource("resetHiddenLarge.png");
             resetIcon = GetEmbeddedImageResource("resetLarge.png");
 
-            String tabName = "Pegboard";
+            string tabName = "Pegboard";
             try
             {
                 application.CreateRibbonTab(tabName);

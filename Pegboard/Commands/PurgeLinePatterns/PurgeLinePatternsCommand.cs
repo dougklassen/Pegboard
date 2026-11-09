@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Revit.Perfect.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -28,7 +30,7 @@ namespace DougKlassen.Pegboard.Commands
 
             ICollection<ElementId> patternsToDelete = new List<ElementId>();
             ElementId match;
-            foreach (String patName in purgeWindow.MatchingElementsListBox.Items)
+            foreach (string patName in purgeWindow.MatchingElementsListBox.Items)
             {
                 match = docLinePatterns.Where(p => patName == p.Name).FirstOrDefault().Id;
                 if (match != null)

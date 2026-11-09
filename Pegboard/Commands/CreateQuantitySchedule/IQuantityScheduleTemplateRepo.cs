@@ -1,4 +1,6 @@
-﻿namespace DougKlassen.Pegboard.Commands
+﻿using System.Collections.Generic;
+
+namespace DougKlassen.Pegboard.Commands
 {
     internal interface IQuantityScheduleTemplateRepo
     {

@@ -1,5 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -17,7 +20,7 @@ namespace DougKlassen.Pegboard.Commands
                 //projecting onto a new list is necessary because deleting from the original FilteredElement during iteration will throw an exception
                 .ToList();
 
-            Int32 refPlanesDeletedCtr = 0,
+            int refPlanesDeletedCtr = 0,
                 elementsDeletedCtr = 0,
                 groupedRefPlanesCtr = 0,
                 undeletableRefPlanesCtr = 0;

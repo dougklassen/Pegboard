@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace DougKlassen.Pegboard.Commands
@@ -14,7 +15,7 @@ namespace DougKlassen.Pegboard.Commands
 
             InitializeComponent();
 
-            MessageTextBox.Text = String.Format("{0} sheets selected", sheets.Count);
+            MessageTextBox.Text = string.Format("{0} sheets selected", sheets.Count);
         }
 
         public List<ViewSheet> SheetsToProccess
@@ -23,7 +24,7 @@ namespace DougKlassen.Pegboard.Commands
             set;
         }
 
-        public Int32 CharsToMatch
+        public int CharsToMatch
         {
             get;
             set;

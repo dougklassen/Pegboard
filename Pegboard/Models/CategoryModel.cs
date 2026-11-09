@@ -4,7 +4,7 @@ namespace DougKlassen.Pegboard.Models
 {
     internal class CategoryModel
     {
-        public String name;
+        public string name;
         public long id;
 
         public CategoryModel(Category cat)

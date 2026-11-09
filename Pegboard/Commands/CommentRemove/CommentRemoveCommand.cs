@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Revit.Perfect.Interface;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DougKlassen.Pegboard.Commands
@@ -13,7 +15,7 @@ namespace DougKlassen.Pegboard.Commands
             //use this regex to split comment strings into separate values
             Regex splitRegex = new Regex(@"\s+");
             //use this as a delimeter when adding a separation between tags
-            String delimeter = " ";
+            string delimeter = " ";
 
             UIDocument uiDoc = commandData.Application.ActiveUIDocument;
             Document dbDoc = commandData.Application.ActiveUIDocument.Document;
@@ -27,7 +29,7 @@ namespace DougKlassen.Pegboard.Commands
                 return Result.Failed;
             }
 
-            HashSet<String> activeComments = new HashSet<String>();
+            HashSet<string> activeComments = new HashSet<string>();
 
             //step through all selected elements and build a list of all comments present
             foreach (ElementId id in selectedElements)
@@ -42,16 +44,16 @@ namespace DougKlassen.Pegboard.Commands
                 }
 
                 Parameter commentParam = commentParams.First();
-                String commentString = commentParams.First().AsString();
+                string commentString = commentParams.First().AsString();
 
                 //skip elements with an empty Comments parameter
-                if (String.IsNullOrWhiteSpace(commentString))
+                if (string.IsNullOrWhiteSpace(commentString))
                 {
                     continue;
                 }
 
                 //add the comments of the current element to the list
-                HashSet<String> currentComments = new HashSet<String>(splitRegex.Split(commentString));
+                HashSet<string> currentComments = new HashSet<string>(splitRegex.Split(commentString));
                 activeComments.UnionWith(currentComments);
             }
             #endregion
@@ -63,8 +65,8 @@ namespace DougKlassen.Pegboard.Commands
                 "Select Comments",
                 "Select comments to be removed from elements");
 
-            Boolean result = (Boolean)window.ShowDialog();
-            IEnumerable<String> tagsToRemove = window.SelectedObjects.Cast<String>();
+            bool result = (bool)window.ShowDialog();
+            IEnumerable<string> tagsToRemove = window.SelectedObjects.Cast<string>();
             #endregion Select commments to delete
 
             #region Delete selected comments
@@ -91,16 +93,16 @@ namespace DougKlassen.Pegboard.Commands
                         }
 
                         Parameter commentParam = commentParams.First();
-                        String commentString = commentParams.First().AsString();
+                        string commentString = commentParams.First().AsString();
 
                         //skip elements with an empty Comments parameter
-                        if (String.IsNullOrWhiteSpace(commentString))
+                        if (string.IsNullOrWhiteSpace(commentString))
                         {
                             continue;
                         }
 
                         //replace all instances of the specified comments and surrounding whitespace with the delimeter
-                        foreach (String removedTag in tagsToRemove)
+                        foreach (string removedTag in tagsToRemove)
                         {
                             Regex removalRegEx = new Regex(@"(?:^|\s+)" + removedTag + @"\s*(?:$|\s)");
                             commentString = removalRegEx.Replace(commentString, delimeter);

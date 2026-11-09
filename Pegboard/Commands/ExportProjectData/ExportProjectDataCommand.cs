@@ -23,7 +23,7 @@ namespace DougKlassen.Pegboard.Commands
                 Title = "Save Project Data Catalog"
             };
             bool? result = saveDialog.ShowDialog();
-            if (saveDialog.FileName == String.Empty || result != true)
+            if (saveDialog.FileName == string.Empty || result != true)
             {
                 return Result.Cancelled;
             }

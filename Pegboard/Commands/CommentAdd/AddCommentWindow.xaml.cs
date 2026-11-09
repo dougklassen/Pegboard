@@ -12,7 +12,7 @@ namespace DougKlassen.Revit.Perfect.Interface
             InitializeComponent();
         }
 
-        public String CommentsToAdd
+        public string CommentsToAdd
         {
             get;
             set;

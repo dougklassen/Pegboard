@@ -1,6 +1,9 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Revit.Perfect.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,15 +16,15 @@ namespace DougKlassen.Pegboard.Commands
         List<View> projectViews;
         StringBuilder cmdResultMsg = new StringBuilder();
 
-        String separator = " ";
+        string separator = " ";
         //TODO: load from config file
-        String prefixRegexString = @"^(?:SK)?\d\d\d[a-z]?$";
+        string prefixRegexString = @"^(?:SK)?\d\d\d[a-z]?$";
 
-        Int16 viewCount = 0;
-        Int16 placedViewCount = 0;
-        Int16 unplacedViewCount = 0;
-        Int16 renamedViewCount = 0;
-        Int16 failedRenameCount = 0;
+        int viewCount = 0;
+        int placedViewCount = 0;
+        int unplacedViewCount = 0;
+        int renamedViewCount = 0;
+        int failedRenameCount = 0;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -68,8 +71,8 @@ namespace DougKlassen.Pegboard.Commands
                 .Cast<ViewSheet>()
                 .Select(s => s.SheetNumber);
 
-            Boolean sheetNumbersAreValid = true;
-            foreach (String sheetNumber in sheetNumbers)
+            bool sheetNumbersAreValid = true;
+            foreach (string sheetNumber in sheetNumbers)
             {
                 if (!prefixRegex.IsMatch(sheetNumber))
                 {
@@ -94,28 +97,28 @@ namespace DougKlassen.Pegboard.Commands
                 {
                     viewCount++;
 
-                    String existingName = view.Name;
-                    String[] segments = splitRegex.Split(existingName);
-                    Boolean hasPrefix = segments.Count() > 0 && prefixRegex.IsMatch(segments[0]);
-                    String existingPrefix = segments[0];
-                    String body = hasPrefix ? existingName.Substring(existingPrefix.Length).Trim() : existingName.Trim();
+                    string existingName = view.Name;
+                    string[] segments = splitRegex.Split(existingName);
+                    bool hasPrefix = segments.Count() > 0 && prefixRegex.IsMatch(segments[0]);
+                    string existingPrefix = segments[0];
+                    string body = hasPrefix ? existingName.Substring(existingPrefix.Length).Trim() : existingName.Trim();
 
                     if (IsPlaced(view))
                     {
-                        String sheetNumber = view.LookupParameter("Sheet Number").AsString();
+                        string sheetNumber = view.LookupParameter("Sheet Number").AsString();
 
                         placedViewCount++;
                         if (hasPrefix)
                         {
                             if (existingPrefix != sheetNumber)
                             {
-                                String newName = String.Format("{0}{1}{2}", sheetNumber, separator, body);
+                                string newName = String.Format("{0}{1}{2}", sheetNumber, separator, body);
                                 TryRenameView(view, newName);
                             }
                         }
                         else
                         {
-                            String newName = String.Format("{0}{1}{2}", sheetNumber, separator, body);
+                            string newName = string.Format("{0}{1}{2}", sheetNumber, separator, body);
                             TryRenameView(view, newName);
                         }
                     }
@@ -142,7 +145,7 @@ namespace DougKlassen.Pegboard.Commands
             return Result.Succeeded;
         }
 
-        private Boolean IsPlaced(View view)
+        private bool IsPlaced(View view)
         {
             if (projectViewports.Where(vp => view.Id == vp.ViewId).Count() > 0)
             {
@@ -154,9 +157,9 @@ namespace DougKlassen.Pegboard.Commands
             }
         }
 
-        private void TryRenameView(View view, String newName)
+        private void TryRenameView(View view, string newName)
         {
-            IEnumerable<String> projectViewNames = projectViews.Select(v => v.Name);
+            IEnumerable<string> projectViewNames = projectViews.Select(v => v.Name);
             //skip if there is a View name conflict
             if (!projectViewNames.Contains(newName))
             {

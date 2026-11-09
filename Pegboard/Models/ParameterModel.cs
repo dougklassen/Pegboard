@@ -1,4 +1,6 @@
 ﻿using Autodesk.Revit.DB;
+using System;
+using System.Collections.Generic;
 
 namespace DougKlassen.Pegboard.Models
 {
@@ -7,35 +9,35 @@ namespace DougKlassen.Pegboard.Models
         /// <summary>
         /// The display name of the parameter
         /// </summary>
-        public String name;
+        public string name;
         /// <summary>
         /// The internal label Revit uses for this parameter in the BuiltInParameter enum 
         /// </summary>
-        public String builtInName;
+        public string builtInName;
         /// <summary>
         /// The group the parameter belongs to. This will be the collapsible subsection it is listed under
         /// in the properties pallete.
         /// </summary>
-        public String group;
+        public string group;
         /// <summary>
         /// If the parameter is a measurable quantity, the type of quantity that it measures 
         /// Formerly, the value corresponding to LabelUtils.GetLabelFor(def.ParameterType)
         /// Now, the label of the ForgeTypeId of the parameter's data type
         /// Had value such as "Text", "Yes/No", "Length"
         /// </summary>
-        public String units;
+        public string units;
         /// <summary>
         /// The id of the parameter definition. This corresponds to the Enum value for builtin parameters
         /// </summary>
         public long id;
-        public String guid;
-        public Boolean? builtIn;
-        public Boolean? variesAcrossGroups;
-        public Boolean? visible;
-        public String projectSharedGlobal;
-        public String internalOrExternal;
-        public String instanceOrType;
-        public String sourceFamily;
+        public string guid;
+        public bool? builtIn;
+        public bool? variesAcrossGroups;
+        public bool? visible;
+        public string projectSharedGlobal;
+        public string internalOrExternal;
+        public string instanceOrType;
+        public string sourceFamily;
         public List<long> categories;
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace DougKlassen.Pegboard.Models
                 name = null;
             }
             builtInName = Enum.GetName(typeof(BuiltInParameter), builtInParam);
-            id = (Int32)builtInParam;
+            id = (int)builtInParam;
             builtIn = true;
         }
 
@@ -85,7 +87,7 @@ namespace DougKlassen.Pegboard.Models
                 }
                 else
                 {
-                    id = (Int32)intDef.BuiltInParameter;
+                    id = (int)intDef.BuiltInParameter;
                     builtIn = true;
                 }
                 variesAcrossGroups = intDef.VariesAcrossGroups;

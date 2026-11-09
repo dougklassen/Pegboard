@@ -1,21 +1,23 @@
 ﻿using DougKlassen.Pegboard.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DougKlassen.Pegboard.Repositories
 {
     internal class ObjectStylesJsonRepo : IObjectStylesRepo
     {
-        private String filePath;
+        private string filePath;
 
-        public ObjectStylesJsonRepo(String jsonRepoFilePath)
+        public ObjectStylesJsonRepo(string jsonRepoFilePath)
         {
             filePath = jsonRepoFilePath;
         }
 
         public IEnumerable<ObjectStylesModel> LoadObjectStyles()
         {
-            String jsonData = File.ReadAllText(filePath);
+            string jsonData = File.ReadAllText(filePath);
             try
             {
                 List<ObjectStylesModel> objectStyles = (List<ObjectStylesModel>)JsonConvert.DeserializeObject(jsonData, typeof(List<ObjectStylesModel>));
@@ -34,7 +36,7 @@ namespace DougKlassen.Pegboard.Repositories
                 Formatting = Formatting.Indented
             };
 
-            String jsonData = JsonConvert.SerializeObject(catalog, settings);
+            string jsonData = JsonConvert.SerializeObject(catalog, settings);
             try
             {
                 File.WriteAllText(filePath, jsonData);

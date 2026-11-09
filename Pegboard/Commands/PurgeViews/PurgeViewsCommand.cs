@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Revit.Perfect.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -28,7 +30,7 @@ namespace DougKlassen.Pegboard.Commands
 
             ICollection<ElementId> viewsToDelete = new List<ElementId>();
             ElementId match;
-            foreach (String viewName in purgeWindow.MatchingElementsListBox.Items)
+            foreach (string viewName in purgeWindow.MatchingElementsListBox.Items)
             {
                 match = docViews
                     .Where(v => viewName == v.Name)

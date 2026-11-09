@@ -1,4 +1,7 @@
 ﻿using Autodesk.Revit.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,15 +16,15 @@ namespace DougKlassen.Revit.Perfect.Interface
         private IEnumerable<Element> docElements;
 
         //TODO: does it really need to be a DependencyProperty?
-        public String SelectRegExString
+        public string SelectRegExString
         {
             get
             {
-                return (String)GetValue(SelectRegExStringProperty);
+                return (string)GetValue(SelectRegExStringProperty);
             }
             set
             {
-                String oldValue = SelectRegExString;
+                string oldValue = SelectRegExString;
                 SetValue(SelectRegExStringProperty, value);
                 OnPropertyChanged(
                     new DependencyPropertyChangedEventArgs(SelectRegExStringProperty, oldValue, value));
@@ -29,7 +32,7 @@ namespace DougKlassen.Revit.Perfect.Interface
         }
         public static readonly DependencyProperty SelectRegExStringProperty = DependencyProperty.Register(
             "SelectRegExString",
-            typeof(String),
+            typeof(string),
             typeof(Window),
             new UIPropertyMetadata(null));
 

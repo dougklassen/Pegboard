@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Revit.Perfect.Interface;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DougKlassen.Pegboard.Commands
@@ -13,7 +15,7 @@ namespace DougKlassen.Pegboard.Commands
             //use this regex to split comment strings into separate values
             Regex splitRegex = new Regex(@"\s+");
             //use this string to delimit separate values in a comment string
-            String delimiter = " ";
+            string delimiter = " ";
 
             UIDocument uiDoc = commandData.Application.ActiveUIDocument;
             Document dbDoc = commandData.Application.ActiveUIDocument.Document;
@@ -29,14 +31,14 @@ namespace DougKlassen.Pegboard.Commands
 
             //Show a window to request the user to enter comments to add
             AddCommentWindow commentWindow = new AddCommentWindow();
-            Boolean result = commentWindow.ShowDialog().Value;
+            bool result = commentWindow.ShowDialog().Value;
             if (!result)
             {
                 return Result.Cancelled;
             }
 
             //Take the input string and extract separate values to add
-            IEnumerable<String> inputValues = splitRegex.Split(commentWindow.CommentsToAdd);
+            IEnumerable<string> inputValues = splitRegex.Split(commentWindow.CommentsToAdd);
 
             //Step through each selected element and add values that don't already exist
             using (Transaction t = new Transaction(dbDoc, "add comments"))
@@ -55,13 +57,13 @@ namespace DougKlassen.Pegboard.Commands
 
                     //add values to the comment if they don't already exist
                     Parameter commentParam = commentParams.First();
-                    String commentValue = commentParam.AsString() ?? String.Empty;
-                    List<String> commentValues = new List<String>();
-                    if (!String.IsNullOrWhiteSpace(commentValue))
+                    string commentValue = commentParam.AsString() ?? string.Empty;
+                    List<string> commentValues = new List<string>();
+                    if (!string.IsNullOrWhiteSpace(commentValue))
                     {
                         commentValues = splitRegex.Split(commentValue).ToList();
                     }
-                    foreach (String newValue in inputValues)
+                    foreach (string newValue in inputValues)
                     {
                         if (!commentValues.Contains(newValue))
                         {

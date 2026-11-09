@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Assembly = System.Reflection.Assembly;
 using WixSharp;
 using WixSharp.Forms;
 using File = WixSharp.File;
@@ -16,20 +17,19 @@ namespace Installer
             string buildConfigurationName = assemblyConfigurationAttribute.Configuration;
             Console.WriteLine("Building installer for Pegboard " + buildConfigurationName);
 
-            //TODO: pull this from the Pegboard assembly
             //the revitVersion of Revit for which to install the add in
             string revitVersion;
             //the GUID of the addin for the specified verison of Revit
             string versionGuid;
             //Addin directory path, will vary based on revitVersion
             string baseAddinDirPath;
-            //target revitVersion based on revitVersion specific project configuration
+            //set values based on the project configuration selected
 #if R2024
             revitVersion = "2024";
             versionGuid = "f0e7c1d5-3b8a-4f2e-9c6b-0f1e2d3c4b5a";
             baseAddinDirPath = @"C:\ProgramData\Autodesk\Revit\Addins\" + revitVersion + @"\";
 #elif R2025
-      revitVersion = "2025";
+      revitVersion = "2025";p
             versionGuid = "0663ee30-aa56-4020-8c7b-7d879526efdd";
             baseAddinDirPath = @"C:\ProgramData\Autodesk\Revit\Addins\" + revitVersion + @"\";
 #elif R2026
@@ -42,13 +42,16 @@ namespace Installer
             baseAddinDirPath = @"C:\Program Files\Autodesk\Revit\Addins\" + revitVersion + @"\";
 #else
 #endif
-            string addinVersion = "1.0.4";
 
             //the location of the source files
             string pegboardSourceDirPath = @".\source\" + revitVersion + @"\";
             //the name of the installation
             string installName = "Pegboard " + revitVersion;
+            //the version of the addin
+            Assembly addInAssembly = Assembly.LoadFrom(pegboardSourceDirPath + "Pegboard.dll");
+            string addinVersion = addInAssembly.GetName().Version.ToString();
 
+            //build the list of files to include in the installation
             var files = Directory.GetFiles(pegboardSourceDirPath);
             List<File> dllFiles = new List<File>();
             foreach(string f in files) {

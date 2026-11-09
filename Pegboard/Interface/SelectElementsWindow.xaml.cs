@@ -1,4 +1,6 @@
 ﻿using Autodesk.Revit.DB;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace DougKlassen.Revit.Perfect.Interface
@@ -8,7 +10,7 @@ namespace DougKlassen.Revit.Perfect.Interface
     /// </summary>
     public partial class SelectElementsWindow : Window
     {
-        public SelectElementsWindow(List<Element> elements, Boolean selectAll)
+        public SelectElementsWindow(List<Element> elements, bool selectAll)
         {
             ElementsToChoose = elements;
 

@@ -1,37 +1,39 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DougKlassen.Pegboard.Commands
 {
     internal class QuantityScheduleTemplateExcelRepo : IQuantityScheduleTemplateRepo
     {
-        private String filePath;
-        private String filterParamColumnName;
-        private String labelColumnName;
-        private String unitsColumnName;
-        private String elementCategoryColumnName;
-        private String projectParamColumnName;
-        private String builtInParamColumnName;
-        private String calculationColumnName;
+        private string filePath;
+        private string filterParamColumnName;
+        private string labelColumnName;
+        private string unitsColumnName;
+        private string elementCategoryColumnName;
+        private string projectParamColumnName;
+        private string builtInParamColumnName;
+        private string calculationColumnName;
 
-        private Int32 filterParamColumn = -1;
-        private Int32 labelColumn = -1;
-        private Int32 unitsColumn = -1;
-        private Int32 elementCategoryColumn = -1;
-        private Int32 projectParamColumn = -1;
-        private Int32 builtInParamColumn = -1;
-        private Int32 calculationColumn = -1;
+        private int filterParamColumn = -1;
+        private int labelColumn = -1;
+        private int unitsColumn = -1;
+        private int elementCategoryColumn = -1;
+        private int projectParamColumn = -1;
+        private int builtInParamColumn = -1;
+        private int calculationColumn = -1;
 
         public QuantityScheduleTemplateExcelRepo(
-            String repoFilePath,
-            String repoFilterParamColumn,
-            String repoLabelColumn,
-            String repoUnitsColumn,
-            String repoElementCategoryColumn,
-            String repoProjectParamColumn,
-            String repoBuiltInParamColumn,
-            String repoCalculationColumn)
+            string repoFilePath,
+            string repoFilterParamColumn,
+            string repoLabelColumn,
+            string repoUnitsColumn,
+            string repoElementCategoryColumn,
+            string repoProjectParamColumn,
+            string repoBuiltInParamColumn,
+            string repoCalculationColumn)
         {
             filePath = repoFilePath;
             filterParamColumnName = repoFilterParamColumn;
@@ -46,7 +48,7 @@ namespace DougKlassen.Pegboard.Commands
         public List<QuantityScheduleTemplate> LoadTemplates()
         {
             List<QuantityScheduleTemplate> templates = new List<QuantityScheduleTemplate>();
-            Dictionary<Int32, String> parseErrors = new Dictionary<Int32, String>();
+            Dictionary<int, string> parseErrors = new Dictionary<int, string>();
 
             IWorkbook workBook;
             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
@@ -59,7 +61,7 @@ namespace DougKlassen.Pegboard.Commands
             IRow headerRow = sheet.GetRow(0);
             for (int i = 0; i < headerRow.LastCellNum; i++)
             {
-                String val = ParseCellToString(headerRow.GetCell(i));
+                string val = ParseCellToString(headerRow.GetCell(i));
 
                 if (val == filterParamColumnName)
                 {
@@ -102,11 +104,11 @@ namespace DougKlassen.Pegboard.Commands
                 throw new QuantityScheduleParseException("A required column was not found in the spreadsheet");
             }
             //The filterParamName is defined in the header of the filterParamColumn
-            String filterParamName = headerRow.GetCell(filterParamColumn).StringCellValue.Trim();
+            string filterParamName = headerRow.GetCell(filterParamColumn).StringCellValue.Trim();
 
             //iterate through all rows after the heading row, starting a new template each time a new filter parameter value is encountered
             IRow row;
-            Int32 rowLength = sheet.GetRow(1).Cells.Count;
+            int rowLength = sheet.GetRow(1).Cells.Count;
             QuantityScheduleTemplate currentTemplate = null;
             for (int r = 1; r < sheet.LastRowNum; r++)
             {
@@ -186,9 +188,9 @@ namespace DougKlassen.Pegboard.Commands
                 //}
                 #endregion row analysis
 
-                String filterParamVal = ParseCellToString(row.GetCell(filterParamColumn));
+                string filterParamVal = ParseCellToString(row.GetCell(filterParamColumn));
                 //if an entry is found in the filterParamColumn start a new template
-                if (filterParamVal != String.Empty)
+                if (filterParamVal != string.Empty)
                 {
                     //add the last template found to the dictionary. currentTemplate is null when no template has been parsed yet.
                     if (currentTemplate != null)
@@ -206,8 +208,8 @@ namespace DougKlassen.Pegboard.Commands
                     currentTemplate = new QuantityScheduleTemplate();
                     currentTemplate.FilterParameterName = filterParamName;
                     currentTemplate.FilterParameterValue = filterParamVal;
-                    String elementCategoryValue = ParseCellToString(row.GetCell(elementCategoryColumn));
-                    if (elementCategoryValue != String.Empty)
+                    string elementCategoryValue = ParseCellToString(row.GetCell(elementCategoryColumn));
+                    if (elementCategoryValue != string.Empty)
                     {
                         currentTemplate.ElementCategory = elementCategoryValue;
                     }
@@ -215,7 +217,7 @@ namespace DougKlassen.Pegboard.Commands
                     {
                         currentTemplate.ElementCategory = null;
                     }
-                    String filterParamValueLabel = ParseCellToString(row.GetCell(labelColumn));
+                    string filterParamValueLabel = ParseCellToString(row.GetCell(labelColumn));
                     currentTemplate.FilterParameterValueLabel = filterParamValueLabel;
                 }
                 //if no new filterParam value is found, parse the row into a new schedule field to be added to the template
@@ -223,35 +225,35 @@ namespace DougKlassen.Pegboard.Commands
                 {
                     QuantityScheduleField currentField = new QuantityScheduleField();
                     //parse the label
-                    String labelValue = ParseCellToString(row.GetCell(labelColumn));
-                    if (labelValue != String.Empty)
+                    string labelValue = ParseCellToString(row.GetCell(labelColumn));
+                    if (labelValue != string.Empty)
                     {
                         currentField.Label = labelValue;
-                        String unitsValue = ParseCellToString(row.GetCell(unitsColumn));
+                        string unitsValue = ParseCellToString(row.GetCell(unitsColumn));
                         //only parse units if the field has a label
-                        if (unitsValue != String.Empty)
+                        if (unitsValue != string.Empty)
                         {
                             currentField.Units = unitsValue;
                         }
                     }
                     //parse the field 
-                    String calculationValue = ParseCellToString(row.GetCell(calculationColumn));
-                    String builtInParamValue = ParseCellToString(row.GetCell(builtInParamColumn));
-                    String projectParamValue = ParseCellToString(row.GetCell(projectParamColumn));
-                    Int32 sourcesInRow = 0; //track how many values are present
-                    if (projectParamValue != String.Empty)
+                    string calculationValue = ParseCellToString(row.GetCell(calculationColumn));
+                    string builtInParamValue = ParseCellToString(row.GetCell(builtInParamColumn));
+                    string projectParamValue = ParseCellToString(row.GetCell(projectParamColumn));
+                    int sourcesInRow = 0; //track how many values are present
+                    if (projectParamValue != string.Empty)
                     {
                         sourcesInRow++;
                         currentField.FieldValue = projectParamValue;
                         currentField.Type = FieldType.ProjectParameter;
                     }
-                    if (builtInParamValue != String.Empty)
+                    if (builtInParamValue != string.Empty)
                     {
                         sourcesInRow++;
                         currentField.FieldValue = builtInParamValue;
                         currentField.Type = FieldType.BuiltInParameter;
                     }
-                    if (calculationValue != String.Empty)
+                    if (calculationValue != string.Empty)
                     {
                         sourcesInRow++;
                         currentField.FieldValue = calculationValue;
@@ -279,10 +281,10 @@ namespace DougKlassen.Pegboard.Commands
             //if parse errors occured, generate an error file and throw an exception
             else
             {
-                String msg = String.Empty;
-                foreach (Int32 rowNum in parseErrors.Keys)
+                string msg = string.Empty;
+                foreach (int rowNum in parseErrors.Keys)
                 {
-                    msg += String.Format("  Row {0}: {1}\n", rowNum, parseErrors[rowNum]);
+                    msg += string.Format("  Row {0}: {1}\n", rowNum, parseErrors[rowNum]);
                 }
 
                 throw new QuantityScheduleParseException(msg);
@@ -294,13 +296,13 @@ namespace DougKlassen.Pegboard.Commands
             throw new NotImplementedException();
         }
 
-        public static String ParseCellToString(ICell cell)
+        public static string ParseCellToString(ICell cell)
         {
-            String val;
+            string val;
 
             if (cell == null)
             {
-                val = String.Empty;
+                val = string.Empty;
             }
             else if (cell.CellType == CellType.String)
             {
@@ -312,7 +314,7 @@ namespace DougKlassen.Pegboard.Commands
             }
             else
             {
-                val = String.Empty;
+                val = string.Empty;
             }
 
             return val;

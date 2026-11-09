@@ -1,11 +1,13 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DougKlassen.Pegboard.Commands
 {
     public class TemplateSelection
     {
-        public Boolean IsSelected
+        public bool IsSelected
         {
             get;
             set;
@@ -17,7 +19,7 @@ namespace DougKlassen.Pegboard.Commands
             set;
         }
 
-        public String Description
+        public string Description
         {
             get;
             set;
@@ -76,7 +78,7 @@ namespace DougKlassen.Pegboard.Commands
             }
             else
             {
-                descriptionTextBlock.Text = String.Empty;
+                descriptionTextBlock.Text = string.Empty;
             }
         }
     }

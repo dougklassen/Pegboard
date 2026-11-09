@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -15,7 +16,7 @@ namespace DougKlassen.Pegboard.Commands
 
             ICollection<ElementId> sel = uiDoc.Selection.GetElementIds();
 
-            Int16 counter = 0;
+            int counter = 0;
 
             using (Transaction t = new Transaction(dbDoc, "Unflip Elements"))
             {

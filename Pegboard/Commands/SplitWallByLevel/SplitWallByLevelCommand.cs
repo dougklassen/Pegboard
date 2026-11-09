@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Revit.Perfect.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -33,13 +35,13 @@ namespace DougKlassen.Pegboard.Commands
 
             /* The parameters that will drive the creation of the new walls */
             Wall sourceWall = dbDoc.GetElement(selection.First()) as Wall; //the wall to be split
-            Double overallBottomElevation; //the bottom elevation of the wall
-            Double overallTopElevation; //the top elevation of the wall
+            double overallBottomElevation; //the bottom elevation of the wall
+            double overallTopElevation; //the top elevation of the wall
             Level overallLevelAbove = null; //the level immediatly above the highest host level.
                                             //This will be the top constraint of the wall unless no level is found above the highest host level, in which case it will be set to null
-            Double tolerance = 0.0001; //tolerance to use when choosing host levels
+            double tolerance = 0.0001; //tolerance to use when choosing host levels
             List<Level> hostLevels = new List<Level>(); //The levels that will host the new individual walls
-            String msg = String.Empty; //diagnostic string
+            string msg = string.Empty; //diagnostic string
 
             /* get the elevation at the bottom of the wall */
             overallBottomElevation =
@@ -53,12 +55,12 @@ namespace DougKlassen.Pegboard.Commands
             //if the wall is constrained to a top level
             {
                 topLevel = dbDoc.GetElement(wallTopLevelID) as Level;
-                Double topOffset = sourceWall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET).AsDouble();
+                double topOffset = sourceWall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET).AsDouble();
                 overallTopElevation = topLevel.Elevation + topOffset;
             }
             else //if the wall is unconnected, the topElevation is the bottomElevation + the unconnected height
             {
-                Double unconnectedHeight = sourceWall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
+                double unconnectedHeight = sourceWall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
                 overallTopElevation = overallBottomElevation + unconnectedHeight;
             }
 
@@ -109,7 +111,7 @@ namespace DougKlassen.Pegboard.Commands
             //TODO: add message to select elements window
             hostLevels.Reverse(); //put in ascending order
             SelectElementsWindow levelPickerWindow = new SelectElementsWindow(hostLevels.Cast<Element>().ToList(), true);
-            Boolean result = (Boolean)levelPickerWindow.ShowDialog();
+            bool result = (bool)levelPickerWindow.ShowDialog();
             if (result)
             {
                 hostLevels = levelPickerWindow.ElementsToChoose
@@ -132,15 +134,15 @@ namespace DougKlassen.Pegboard.Commands
             {
                 t.Start();
 
-                msg += String.Format("Wall Bottom: {0}\nWall Top: {1}\n", overallBottomElevation, overallTopElevation);
-                msg += String.Format("Levels found: {0}\n\n", hostLevels.Count());
+                msg += string.Format("Wall Bottom: {0}\nWall Top: {1}\n", overallBottomElevation, overallTopElevation);
+                msg += string.Format("Levels found: {0}\n\n", hostLevels.Count());
                 /*iterate through the host levels*/
                 for (int i = 0; i < hostLevels.Count(); i++)
                 {
                     Level newHostLvl = hostLevels[i];
                     Level newTopLvl = null; //the top constraint, null indicates the top will be unconnected
-                    Double newBottomOffset = 0;
-                    Double newTopOffset = 0;
+                    double newBottomOffset = 0;
+                    double newTopOffset = 0;
                     /* determine the top constraint of the wall */
                     if (i < (hostLevels.Count() - 1)) //if there is a host level above, use that as top constraint
                     {
@@ -155,14 +157,14 @@ namespace DougKlassen.Pegboard.Commands
                     /* single level wall */
                     if (1 == hostLevels.Count) //if there is only one level
                     {
-                        msg += String.Format("Single Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
+                        msg += string.Format("Single Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
                         /* set the bottom of the wall */
                         //confirm whether the wall bottom is outside of tolerance and requires an offset
                         if (!((newHostLvl.Elevation >= overallBottomElevation - tolerance) && (newHostLvl.Elevation <= overallBottomElevation + tolerance)))
                         {
                             newBottomOffset = overallBottomElevation - newHostLvl.Elevation;
                         }
-                        msg += String.Format("+Bottom offset: {0}\n", newBottomOffset);
+                        msg += string.Format("+Bottom offset: {0}\n", newBottomOffset);
                         /* set the top of the wall */
                         if (newTopLvl != null) //if a valid top constraint was found
                         {
@@ -171,12 +173,12 @@ namespace DougKlassen.Pegboard.Commands
                             {
                                 newTopOffset = overallTopElevation - newTopLvl.Elevation;
                             }
-                            msg += String.Format("+Top constraint: {0}\n+Top offset: {1}\n", newTopLvl.Name, newTopOffset);
+                            msg += string.Format("+Top constraint: {0}\n+Top offset: {1}\n", newTopLvl.Name, newTopOffset);
                         }
                         else //the wall will be unconnected and newTopOffset will be the unconnected height
                         {
                             newTopOffset = overallTopElevation - newHostLvl.Elevation;
-                            msg += String.Format("+Unconnected height: {0}", newTopOffset);
+                            msg += string.Format("+Unconnected height: {0}", newTopOffset);
                         }
                     }
                     /* bottom level wall */
@@ -187,13 +189,13 @@ namespace DougKlassen.Pegboard.Commands
                         {
                             newBottomOffset = overallBottomElevation - newHostLvl.Elevation;
                         }
-                        msg += String.Format("Bottom Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
-                        msg += String.Format("+Bottom offset: {0}\n", newBottomOffset);
+                        msg += string.Format("Bottom Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
+                        msg += string.Format("+Bottom offset: {0}\n", newBottomOffset);
                     }
                     /* top level wall */
                     else if (hostLevels[i].Id == hostLevels.Last().Id) //if this is the top level of the wall
                     {
-                        msg += String.Format("Top Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
+                        msg += string.Format("Top Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
                         /* set the top of the wall */
                         if (newTopLvl != null) //if a valid top constraint was found
                         {
@@ -202,18 +204,18 @@ namespace DougKlassen.Pegboard.Commands
                             {
                                 newTopOffset = overallTopElevation - newTopLvl.Elevation;
                             }
-                            msg += String.Format("+Top constraint: {0}\n+Top offset: {1}\n", newTopLvl.Name, newTopOffset);
+                            msg += string.Format("+Top constraint: {0}\n+Top offset: {1}\n", newTopLvl.Name, newTopOffset);
                         }
                         else //the wall will be unconnected and newTopOffset will be the unconnected height
                         {
                             newTopOffset = overallTopElevation - newHostLvl.Elevation;
-                            msg += String.Format("+Unconnected height: {0}", newTopOffset);
+                            msg += string.Format("+Unconnected height: {0}", newTopOffset);
                         }
                     }
                     /* middle level wall */
                     else //if this is a level between the top and bottom of the wall
                     {
-                        msg += String.Format("Middle Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
+                        msg += string.Format("Middle Level-{0}: {1}\n", newHostLvl.Name, newHostLvl.Elevation);
                     }
 
                     /* create the new wall */

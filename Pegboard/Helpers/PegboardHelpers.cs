@@ -1,6 +1,9 @@
 ﻿using Autodesk.Revit.DB;
 using DougKlassen.Pegboard.Models;
 using NPOI.SS.UserModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DougKlassen.Pegboard.Helpers
@@ -57,10 +60,10 @@ namespace DougKlassen.Pegboard.Helpers
         /// Generates a timestamp string in the format "yyyyMMdd-HHmmss"
         /// </summary>
         /// <returns>A timestamp string in the format "yyyyMMdd-HHmmss"</returns>
-        public static String GetTimeStamp()
+        public static string GetTimeStamp()
         {
             DateTime now = DateTime.Now;
-            return String.Format("{0}-{1}",
+            return string.Format("{0}-{1}",
                 now.ToString("yyyyMMdd"),
                 now.ToString("HHmmss"));
         }
@@ -70,17 +73,17 @@ namespace DougKlassen.Pegboard.Helpers
         /// </summary>
         /// <param name="proposedName">The name to be incremented</param>
         /// <returns>A new version of the name</returns>
-        public static String GetIncrementedName(String originalName)
+        public static string GetIncrementedName(string originalName)
         {
-            String prefix;
-            Int32 postFixValue;
+            string prefix;
+            int postFixValue;
 
             Regex postfixRegEx = new Regex(@"(.*)\.([\d]{3})$");
             Match m = postfixRegEx.Match(originalName);
             if (m.Success)
             {
                 prefix = m.Groups[1].Value;
-                postFixValue = Int32.Parse(m.Groups[2].Value) + 1;
+                postFixValue = int.Parse(m.Groups[2].Value) + 1;
             }
             else
             {
@@ -88,7 +91,7 @@ namespace DougKlassen.Pegboard.Helpers
                 postFixValue = 0;
             }
 
-            return String.Format("{0}.{1}", prefix, postFixValue.ToString("D3"));
+            return string.Format("{0}.{1}", prefix, postFixValue.ToString("D3"));
         }
 
         /// <summary>
@@ -97,7 +100,7 @@ namespace DougKlassen.Pegboard.Helpers
         /// <param name="dbDoc">the document to use</param>
         /// <param name="newName">the name to be made unique</param>
         /// <returns>either the same string, or the string with an incremented number appended</returns>
-        public static String GetUniqueViewName(this Document dbDoc, String newName)
+        public static string GetUniqueViewName(this Document dbDoc, string newName)
         {
             Regex sameNameWithOptionalNumber = new Regex(newName + "([(](?<num>[0-9]+)[)]$)?");
             FilteredElementCollector c = new FilteredElementCollector(dbDoc);

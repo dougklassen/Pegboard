@@ -4,6 +4,9 @@ using DougKlassen.Pegboard.Helpers;
 using DougKlassen.Pegboard.Models;
 using DougKlassen.Pegboard.Repositories;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -44,7 +47,7 @@ namespace DougKlassen.Pegboard.Commands
                 Title = "Save Parameters Catalog"
             };
             bool? result = saveDialog.ShowDialog();
-            if (saveDialog.FileName == String.Empty || result != true)
+            if (saveDialog.FileName == string.Empty || result != true)
             {
                 return Result.Cancelled;
             }

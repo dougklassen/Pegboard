@@ -1,14 +1,15 @@
 ﻿using DougKlassen.Pegboard.Models;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace DougKlassen.Pegboard.Repositories
 {
     internal class ProjectDataJsonRepo : IProjectDataRepo
     {
-        private String filePath;
+        private string filePath;
 
-        public ProjectDataJsonRepo(String jsonRepoFilePath)
+        public ProjectDataJsonRepo(string jsonRepoFilePath)
         {
             filePath = jsonRepoFilePath;
         }
@@ -25,7 +26,7 @@ namespace DougKlassen.Pegboard.Repositories
                 Formatting = Formatting.Indented
             };
 
-            String jsonData = JsonConvert.SerializeObject(catalog, settings);
+            string jsonData = JsonConvert.SerializeObject(catalog, settings);
             try
             {
                 File.WriteAllText(filePath, jsonData);

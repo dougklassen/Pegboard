@@ -2,12 +2,12 @@
 {
     internal class ObjectStylesModel
     {
-        public String Name { get; set; }
-        public Int32? ProjectionLineweight { get; set; }
+        public string Name { get; set; }
+        public int? ProjectionLineweight { get; set; }
         public ColorModel LineColor { get; set; }
-        public Byte Red { get; set; }
-        public Byte Green { get; set; }
-        public Byte Blue { get; set; }
-        public Boolean Delete { get; set; }
+        public byte Red { get; set; }
+        public byte Green { get; set; }
+        public byte Blue { get; set; }
+        public bool Delete { get; set; }
     }
 }

@@ -4,9 +4,9 @@ namespace DougKlassen.Pegboard.Models
 {
     internal class VisibilityColor
     {
-        public Byte? Red { get; set; }
-        public Byte? Green { get; set; }
-        public Byte? Blue { get; set; }
+        public byte? Red { get; set; }
+        public byte? Green { get; set; }
+        public byte? Blue { get; set; }
 
         public VisibilityColor()
         {

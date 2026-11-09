@@ -3,6 +3,9 @@ using Autodesk.Revit.UI;
 using DougKlassen.Pegboard.Models;
 using DougKlassen.Pegboard.Repositories;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -14,7 +17,7 @@ namespace DougKlassen.Pegboard.Commands
             Document dbDoc = commandData.Application.ActiveUIDocument.Document;
             IEnumerable<ObjectStylesModel> importedStyles = null;
 
-            String msg = String.Empty;
+            string msg = string.Empty;
 
             OpenFileDialog dlg = new OpenFileDialog()
             {
@@ -22,7 +25,7 @@ namespace DougKlassen.Pegboard.Commands
                 DefaultExt = ".json",
                 Filter = "JSON files|*.json|Text Files|*.txt|All Files|*.*"
             };
-            Boolean? dlgResult = dlg.ShowDialog();
+            bool? dlgResult = dlg.ShowDialog();
 
             if (true != dlgResult.Value)
             {
@@ -69,7 +72,7 @@ namespace DougKlassen.Pegboard.Commands
                 t.Commit();
             }
 
-            if (String.Empty != msg)
+            if (string.Empty != msg)
             {
                 TaskDialog.Show("Import Result", msg);
             }

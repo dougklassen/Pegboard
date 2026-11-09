@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DougKlassen.Pegboard.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DougKlassen.Pegboard.Commands
 {
@@ -10,8 +12,8 @@ namespace DougKlassen.Pegboard.Commands
         //TODO: exclude links
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            String ttl = "Reset Hidden";
-            String msg = String.Empty;
+            string ttl = "Reset Hidden";
+            string msg = string.Empty;
             Document dbDoc = commandData.Application.ActiveUIDocument.Document;
             View currentView = commandData.Application.ActiveUIDocument.ActiveView;
             msg += "Current view: " + currentView.Name + '\n';
@@ -34,7 +36,7 @@ namespace DougKlassen.Pegboard.Commands
                 {
                     t.Start(ttl);
                     currentView.UnhideElements(elementIdsToUnhide);
-                    msg += String.Format("{0} elements were unhidden in the current view\n", elementIdsToUnhide.Count);
+                    msg += string.Format("{0} elements were unhidden in the current view\n", elementIdsToUnhide.Count);
                     t.Commit();
                 }
             }
